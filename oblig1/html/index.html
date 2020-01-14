@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nb" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Oblig 1 | Gruppe 15</title>
+    <!--<script type="text/javascript" src="../js/index.js"></script>-->
+  </head>
+  <body>
+    <main>
+      <section>
+        <form action="../php/loginUserFromDatabase.php" id="loginForm" method="POST">
+          <h2>Logg inn</h2>
+          <label for="loginName">Navn</label>
+          <input id="loginName" type="text" name="loginName" required value="1">
+          <label for="loginPassword">Passord</label>
+          <input id="loginPassword" type="password" name="loginPassword" required value="1">
+          <button id="loginBtn">Logg inn</button>
+        </form>
+      </section>
+
+      <section>
+        <form action="../php/registerUserToDatabase.php" id="registerForm" method="POST">
+          <h2>Registrer ny bruker</h2>
+          <label for="registerName">Navn</label>
+          <input id="registerName" type="text" name="registerName" required value="1">
+          <label for="registerPassword">Passord</label>
+          <input id="registerPassword" type="password" name="registerPassword" required value="1">
+          <label for="registerEmail">Email</label>
+          <input id="registerEmail" type="text" name="registerEmail" required value="1">
+          <p>Studieretning:</p>
+          <select id="registerStudie" name="registerStudie" required>
+            <option value="1">Informatikk</option>
+            <option value="2">Informasjonssytemer</option>
+            <option value="3">Dataingeniør</option>
+          </select>
+          <p>Kull:</p>
+          <select id="registerYear" name="registerYear" required>
+            <option value="1">1. år</option>
+            <option value="2">2. år</option>
+            <option value="3">3. år</option>
+          </select>
+          <button type="submit" value="Submit" id="registerBtn">Registrer</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
