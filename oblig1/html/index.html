@@ -20,6 +20,21 @@
       </section>
 
       <section>
+          <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
+            <h2>Registrer ny foreleser</h2>
+            <label for="foreleserNavn">Navn</label>
+            <input type="text" name="navn" id="foreleserNavn" required />
+            <label for="foreleserEmail">Mail</label>
+            <input type="email" name="email" id="foreleserEmail" required />
+            <label for="foreleserPassord">Passord</label>
+            <input type="password" name="passord" id="foreleserPassord" required />
+            <label for="bilde">Bilde-URL</label>
+            <input type="text" name="bilde" id="bilde" required />
+            <input type="submit" name="submit" value="Registrer" />
+          </form>
+      </section>
+
+      <section>
         <form action="../php/registerUserToDatabase.php" id="registerForm" method="POST">
           <h2>Registrer ny bruker</h2>
           <label for="registerName">Navn</label>
