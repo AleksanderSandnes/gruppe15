@@ -28,6 +28,17 @@
           <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required value="1">
           <button id="forgotPasswordBtn">Glemt passord</button>
         </form>
+
+      <form action="../php/lecturerForgotPasswordFromDatabase.php" id="forgotPasswordFormLecturer" method="POST">
+        <h2>Foreleser glemt passord</h2>
+        <label for="foreleserForgotPasswordEmail">Epost</label>
+        <input id="foreleserForgotPasswordEmail" type="text" name="foreleserForgotPasswordEmail" required value="1">
+        <label for="foreleserForgotPasswordOldPassword">Gammelt passord</label>
+        <input id="foreleserForgotPasswordOldPassword" type="text" name="foreleserForgotPasswordOldPassword" required value="1">
+        <label for="foreleserForgotPasswordNewPassword">Nytt passord</label>
+        <input id="foreleserForgotPasswordNewPassword" type="password" name="foreleserForgotPasswordNewPassword" required value="1">
+        <button id="foreleserForgotPasswordBtn">Glemt passord</button>
+      </form>
       </section>
 
       <section>
@@ -56,12 +67,12 @@
 
         <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
           <h2>Registrer ny foreleser</h2>
-          <label for="foreleserNavn">Navn</label>
-          <input type="text" name="navn" id="foreleserNavn" required />
-          <label for="foreleserEmail">Mail</label>
-          <input type="email" name="email" id="foreleserEmail" required />
-          <label for="foreleserPassord">Passord</label>
-          <input type="password" name="passord" id="foreleserPassord" required />
+          <label for="navn">Navn</label>
+          <input type="text" name="navn" id="navn" required />
+          <label for="email">Mail</label>
+          <input type="email" name="email" id="email" required />
+          <label for="passord">Passord</label>
+          <input type="password" name="passord" id="passord" required />
           <label for="bilde">Bilde-URL</label>
           <input type="text" name="bilde" id="bilde" required />
           <input type="submit" name="submit" value="Registrer" />

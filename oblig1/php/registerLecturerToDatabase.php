@@ -1,7 +1,7 @@
 <?php
-$navn = $_POST['foreleserNavn'];
-$email = $_POST['foreleserEmail'];
-$passord = $_POST['foreleserPassord'];
+$navn = $_POST['navn'];
+$email = $_POST['email'];
+$passord = $_POST['passord'];
 $bildeURL = $_POST['bilde'];
 
 if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
@@ -16,7 +16,7 @@ if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {
         $SELECT = "SELECT email FROM foreleser WHERE email = ? LIMIT 1";
-        $INSERT = "INSERT INTO foreleser (navn, email, passord, bildeURL) VALUES (?, ?, ?, ?, ?)";
+        $INSERT = "INSERT INTO foreleser (brukernavn, email, passord, bildeURL) VALUES (?, ?, ?, ?, ?)";
 
         $stmt = $conn->prepare($SELECT);
         $stmt->bind_param("s",$email);
@@ -27,7 +27,6 @@ if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
 
         if ($rnum == 0) {
             $stmt->close();
-
             $stmt = $conn->prepare($INSERT);
             $stmt->bind_param("sssii", $navn, $email, $passord, $bildeURL);
             $stmt->execute();
