@@ -1,26 +1,27 @@
 <?php
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "myDB";
+   include("config.php");
+   session_start();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form
 
-$sql = "SELECT id, firstname, lastname FROM MyGuests";
-$result = $conn->query($sql);
+      $myusername = mysqli_real_escape_string($db,$_POST['loginName']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['loginPassword']);
 
-if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
-    }
-} else {
-    echo "0 results";
-}
-$conn->close();
+      $sql = "SELECT idBruker FROM brukeretabell WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
+      $result = mysqli_query($db,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+      $count = mysqli_num_rows($result);
+
+      // If result matched $myusername and $mypassword, table row must be 1 row
+
+      if($count == 1) {
+         $_SESSION['login_user'] = $myusername;
+         header("location: welcomeUser.php");
+      } else {
+         $error = "Your Login Name or Password is invalid";
+         echo "Feil brukernavn eller passord...eller begge.";
+      }
+   }
 ?>

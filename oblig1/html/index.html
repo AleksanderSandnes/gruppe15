@@ -10,28 +10,24 @@
     <main>
       <section>
         <form action="../php/loginUserFromDatabase.php" id="loginForm" method="POST">
-          <h2>Logg inn</h2>
+          <h2>Logg inn bruker</h2>
           <label for="loginName">Navn</label>
           <input id="loginName" type="text" name="loginName" required value="1">
           <label for="loginPassword">Passord</label>
           <input id="loginPassword" type="password" name="loginPassword" required value="1">
           <button id="loginBtn">Logg inn</button>
         </form>
-      </section>
 
-      <section>
-          <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
-            <h2>Registrer ny foreleser</h2>
-            <label for="foreleserNavn">Navn</label>
-            <input type="text" name="navn" id="foreleserNavn" required />
-            <label for="foreleserEmail">Mail</label>
-            <input type="email" name="email" id="foreleserEmail" required />
-            <label for="foreleserPassord">Passord</label>
-            <input type="password" name="passord" id="foreleserPassord" required />
-            <label for="bilde">Bilde-URL</label>
-            <input type="text" name="bilde" id="bilde" required />
-            <input type="submit" name="submit" value="Registrer" />
-          </form>
+        <form action="../php/userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
+          <h2>Bruker glemt passord</h2>
+          <label for="forgotPasswordEmail">Epost</label>
+          <input id="forgotPasswordEmail" type="text" name="forgotPasswordEmail" required value="1">
+          <label for="forgotPasswordOldPassword">Gammelt passord</label>
+          <input id="forgotPasswordOldPassword" type="text" name="forgotPasswordOldPassword" required value="1">
+          <label for="forgotPasswordNewPassword">Nytt passord</label>
+          <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required value="1">
+          <button id="forgotPasswordBtn">Glemt passord</button>
+        </form>
       </section>
 
       <section>
@@ -56,6 +52,19 @@
             <option value="3">3. år</option>
           </select>
           <button type="submit" value="Submit" id="registerBtn">Registrer</button>
+        </form>
+
+        <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
+          <h2>Registrer ny foreleser</h2>
+          <label for="foreleserNavn">Navn</label>
+          <input type="text" name="navn" id="foreleserNavn" required />
+          <label for="foreleserEmail">Mail</label>
+          <input type="email" name="email" id="foreleserEmail" required />
+          <label for="foreleserPassord">Passord</label>
+          <input type="password" name="passord" id="foreleserPassord" required />
+          <label for="bilde">Bilde-URL</label>
+          <input type="text" name="bilde" id="bilde" required />
+          <input type="submit" name="submit" value="Registrer" />
         </form>
       </section>
     </main>

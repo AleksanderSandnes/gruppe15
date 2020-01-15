@@ -4,6 +4,7 @@
 
 body {
     height: 100vh;
+    margin: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,7 +13,7 @@ body {
 body > main {
     width: 100%;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
@@ -20,11 +21,13 @@ body > main {
 
 body > main > section {
     width: 40%;
+    margin: 2.5%;
+    border: 1px dotted black;
 }
 
 body > main > section > form {
-    padding: 5%;
     border: 1px dotted black;
+    padding: 5%;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;

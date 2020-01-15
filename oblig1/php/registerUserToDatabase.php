@@ -10,14 +10,12 @@ if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($
     $dbUsername = "root";
     $dbPassword = "";
     $dbname = "brukere";
-
     $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
-
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {
         $SELECT = "SELECT brukerEmail FROM brukeretabell WHERE brukerEmail = ? LIMIT 1";
-        $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, brukerEmail, brukerStudie, brukerAar) VALUES (?, ?, ?, ?, ?)";
+        $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, brukerEmail, brukerStudie, brukerAar, brukerType) VALUES (?, ?, ?, ?, ?, 1)";
 
         $stmt = $conn->prepare($SELECT);
         $stmt->bind_param("s",$brukerEmail);
@@ -28,7 +26,6 @@ if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($
 
         if ($rnum == 0) {
             $stmt->close();
-
             $stmt = $conn->prepare($INSERT);
             $stmt->bind_param("sssii", $userName, $userPassword, $userEmail, $userStudie, $userYear);
             $stmt->execute();
@@ -44,4 +41,6 @@ if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($
     die();
 }
 
-?>
+?><html">
+      <h2><a href = "logout.php">Gå tilbake til login</a></h2>
+</html>
