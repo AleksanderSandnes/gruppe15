@@ -6,7 +6,7 @@ $userStudie = $_POST['registerStudie'];
 $userYear = $_POST['registerYear'];
 
 if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear)) {
-    $host = "localhost";
+    $host = "http://158.39.188.215/";
     $dbUsername = "root";
     $dbPassword = "Gruppe15";
     $dbname = "brukere";
