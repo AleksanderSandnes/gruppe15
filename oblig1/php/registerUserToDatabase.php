@@ -6,11 +6,12 @@ $userStudie = $_POST['registerStudie'];
 $userYear = $_POST['registerYear'];
 
 if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear)) {
-    $host = "localhost";
+    $host = "http://158.39.188.215/";
     $dbUsername = "root";
-    $dbPassword = "Gruppe15";
+    $dbPassword = "";
     $dbname = "brukere";
-    $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+    $conn = mysql_connect("$host", "$dbUsername", "$dbPassword");
+    mysql_select_db("$dbname");
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {
