@@ -10,8 +10,7 @@ if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($
     $dbUsername = "root";
     $dbPassword = "";
     $dbname = "brukere";
-    $conn = mysql_connect("$host", "$dbUsername", "$dbPassword");
-    mysql_select_db("$dbname");
+    $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {
