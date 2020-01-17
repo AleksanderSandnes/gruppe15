@@ -5,8 +5,8 @@
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form
 
-      $myusername = mysqli_real_escape_string($db,$_POST['loginName']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['loginPassword']);
+      $myusername = mysqli_real_escape_string($db,$_POST['loginUserName']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['loginUserPassword']);
 
       $sql = "SELECT idBruker FROM brukeretabell WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
       $result = mysqli_query($db,$sql);
