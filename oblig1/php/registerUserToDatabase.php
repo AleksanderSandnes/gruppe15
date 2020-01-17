@@ -7,8 +7,8 @@ $userYear = $_POST['registerYear'];
 
 if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear)) {
     $host = "localhost";
-    $dbUsername = "datasikkerhet";
-    $dbPassword = "";
+    $dbUsername = "root";
+    $dbPassword = "Gruppe15";
     $dbname = "brukere";
     $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
     if (mysqli_connect_error()) {
