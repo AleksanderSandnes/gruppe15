@@ -7,7 +7,7 @@ $bildeURL = $_POST['bilde'];
 if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
     $host = "localhost";
     $dbUsername = "root";
-    $dbPassword = "";
+    $dbPassword = "Gruppe15...123";
     $dbname = "brukere";
 
     $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
