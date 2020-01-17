@@ -8,22 +8,18 @@
   <body>
     <main>
       <section>
-        <form action="../php/loginUserFromDatabase.php" id="loginForm" method="POST">
+        <form action="../php/loginFromDatabase.php" id="loginForm" method="POST">
           <h2>Logg inn bruker</h2>
           <label for="loginName">Navn</label>
           <input id="loginName" type="text" name="loginUserName" required value="1">
           <label for="loginPassword">Passord</label>
           <input id="loginPassword" type="password" name="loginUserPassword" required value="1">
+          <p>Type bruker:</p>
+          <select name="typeBruker" required>
+            <option value="brukeretabell">Elev</option>
+            <option value="foreleser">Foreleser</option>
+          </select>
           <button id="loginBtn">Logg inn</button>
-        </form>
-
-        <form action="../php/loginLecturerToDatabase.php" method="POST">
-          <h2>Logg inn bruker</h2>
-          <label for="loginName">Navn</label>
-          <input type="text" name="loginLecturerName" required value="1">
-          <label for="loginPassword">Passord</label>
-          <input type="password" name="loginLecturerPassword" required value="1">
-          <button>Logg inn</button>
         </form>
 
         <form action="../php/userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
@@ -34,19 +30,13 @@
           <input id="forgotPasswordOldPassword" type="text" name="forgotPasswordOldPassword" required value="1">
           <label for="forgotPasswordNewPassword">Nytt passord</label>
           <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required value="1">
+          <p>Type bruker:</p>
+          <select name="typeBruker" required>
+            <option value="brukeretabell">Elev</option>
+            <option value="foreleser">Foreleser</option>
+          </select>
           <button id="forgotPasswordBtn">Glemt passord</button>
         </form>
-
-      <form action="../php/lecturerForgotPasswordFromDatabase.php" id="forgotPasswordFormLecturer" method="POST">
-        <h2>Foreleser glemt passord</h2>
-        <label for="foreleserForgotPasswordEmail">Epost</label>
-        <input id="foreleserForgotPasswordEmail" type="text" name="foreleserForgotPasswordEmail" required value="1">
-        <label for="foreleserForgotPasswordOldPassword">Gammelt passord</label>
-        <input id="foreleserForgotPasswordOldPassword" type="text" name="foreleserForgotPasswordOldPassword" required value="1">
-        <label for="foreleserForgotPasswordNewPassword">Nytt passord</label>
-        <input id="foreleserForgotPasswordNewPassword" type="password" name="foreleserForgotPasswordNewPassword" required value="1">
-        <button id="foreleserForgotPasswordBtn">Glemt passord</button>
-      </form>
       </section>
 
       <section>

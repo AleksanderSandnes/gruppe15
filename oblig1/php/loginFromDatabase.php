@@ -4,11 +4,12 @@
 
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form
+      $typeBruker = mysqli_real_escape_string($db,$_POST['typeBruker']);
 
-      $myusername = mysqli_real_escape_string($db,$_POST['loginLecturerName']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['loginLecturerPassword']);
+      $myusername = mysqli_real_escape_string($db,$_POST['loginUserName']);
+      $mypassword = mysqli_real_escape_string($db,$_POST['loginUserPassword']);
 
-      $sql = "SELECT id FROM foreleser WHERE brukernavn = '$myusername' and passord = '$mypassword'";
+      $sql = "SELECT idBruker FROM $typeBruker WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
       $result = mysqli_query($db,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 
@@ -20,7 +21,8 @@
 
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
-         header("location: welcomeTeacher.php");
+         $_SESSION['login_type'] = $typeBruker;
+         header("location: welcome$typeBruker.php");
       } else {
          $error = "Your Login Name or Password is invalid";
          echo "Feil brukernavn eller passord...eller begge.";
