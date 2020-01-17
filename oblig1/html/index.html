@@ -17,6 +17,15 @@
           <button id="loginBtn">Logg inn</button>
         </form>
 
+        <form action="../php/loginLecturerToDatabase.php" id="loginLecturerForm" method="POST">
+          <h2>Logg inn foreleser</h2>
+          <label for="loginName">Navn</label>
+          <input type="text" name="loginName" required value="1">
+          <label for="loginPassword">Passord</label>
+          <input type="password" name="loginPassword" required value="1">
+          <button>Logg inn</button>
+        </form>
+
         <form action="../php/userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
           <h2>Bruker glemt passord</h2>
           <label for="forgotPasswordEmail">Epost</label>

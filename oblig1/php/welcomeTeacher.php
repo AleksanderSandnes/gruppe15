@@ -1,5 +1,5 @@
 <?php
-   include('session.php');
+   include('sessionLecturer.php');
    if ($login_type == 1) {
         header("location: welcomeUser.php");
    } else if ($login_type == 3) {
