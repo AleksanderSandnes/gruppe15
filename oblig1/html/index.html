@@ -4,22 +4,24 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="../css/index.css">
     <title>Oblig 1 | Gruppe 15</title>
+    <script type="text/javascript" src="../js/index.js"></script>
   </head>
   <body>
     <main>
       <section>
         <form action="../php/loginFromDatabase.php" id="loginForm" method="POST">
           <h2>Logg inn bruker</h2>
-          <label for="loginName">Navn</label>
+          <label id="loginType" for="loginName">Email</label>
           <input id="loginName" type="text" name="loginUserName" required value="1">
           <label for="loginPassword">Passord</label>
           <input id="loginPassword" type="password" name="loginUserPassword" required value="1">
-          <p>Type bruker:</p>
-          <select name="typeBruker" required>
+          <label for="userLoginTypeBruker">Type bruker:</label>
+          <select id="userLoginTypeBruker" name="typeBruker" required>
             <option value="brukeretabell">Elev</option>
             <option value="foreleser">Foreleser</option>
+            <option value="admin">Admin</option>
           </select>
-          <button id="loginBtn">Logg inn</button>
+          <button type="submit" value="Submit" id="loginBtn">Logg inn</button>
         </form>
 
         <form action="../php/userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
@@ -30,51 +32,61 @@
           <input id="forgotPasswordOldPassword" type="text" name="forgotPasswordOldPassword" required value="1">
           <label for="forgotPasswordNewPassword">Nytt passord</label>
           <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required value="1">
-          <p>Type bruker:</p>
-          <select name="typeBruker" required>
+          <label for="userForgotPasswordTypeBruker">Type bruker:</label>
+          <select id="userForgotPasswordTypeBruker" name="typeBruker" required>
             <option value="brukeretabell">Elev</option>
             <option value="foreleser">Foreleser</option>
           </select>
-          <button id="forgotPasswordBtn">Glemt passord</button>
+          <button type="submit" value="Submit" id="forgotPasswordBtn">Glemt passord</button>
         </form>
       </section>
 
       <section>
-        <form action="../php/registerUserToDatabase.php" id="registerForm" method="POST">
-          <h2>Registrer ny bruker</h2>
-          <label for="registerName">Navn</label>
-          <input id="registerName" type="text" name="registerName" required value="1">
-          <label for="registerPassword">Passord</label>
-          <input id="registerPassword" type="password" name="registerPassword" required value="1">
-          <label for="registerEmail">Email</label>
-          <input id="registerEmail" type="text" name="registerEmail" required value="1">
-          <p>Studieretning:</p>
-          <select id="registerStudie" name="registerStudie" required>
-            <option value="1">Informatikk</option>
-            <option value="2">Informasjonssytemer</option>
-            <option value="3">Dataingeniør</option>
-          </select>
-          <p>Kull:</p>
-          <select id="registerYear" name="registerYear" required>
-            <option value="1">1. år</option>
-            <option value="2">2. år</option>
-            <option value="3">3. år</option>
-          </select>
-          <button type="submit" value="Submit" id="registerBtn">Registrer</button>
-        </form>
+        <label for="register">Velg en type bruker:</label>
+        <select id="register">
+          <option value="student">Elev</option>
+          <option value="teacher">Foreleser</option>
+        </select>
 
-        <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
-          <h2>Registrer ny foreleser</h2>
-          <label for="navn">Navn</label>
-          <input type="text" name="navn" id="navn" required />
-          <label for="email">Mail</label>
-          <input type="email" name="email" id="email" required />
-          <label for="passord">Passord</label>
-          <input type="password" name="passord" id="passord" required />
-          <label for="bilde">Bilde-URL</label>
-          <input type="text" name="bilde" id="bilde" required />
-          <input type="submit" name="submit" value="Registrer" />
-        </form>
+        <article id="studentRegister">
+          <form action="../php/registerUserToDatabase.php" method="POST">
+            <h2>Registrer ny bruker</h2>
+            <label for="registerName">Navn</label>
+            <input id="registerName" type="text" name="registerName" required value="1">
+            <label for="registerPassword">Passord</label>
+            <input id="registerPassword" type="password" name="registerPassword" required value="1">
+            <label for="registerEmail">Email</label>
+            <input id="registerEmail" type="text" name="registerEmail" required value="1">
+            <label for="userRegisterStudie">Studieretning:</label>
+            <select id="userRegisterStudie" name="registerStudie" required>
+              <option value="1">Informatikk</option>
+              <option value="2">Informasjonssytemer</option>
+              <option value="3">Dataingeniør</option>
+            </select>
+            <label for="userRegisterYear">Kull:</label>
+            <select id="userRegisterYear" name="registerYear" required>
+              <option value="1">1. år</option>
+              <option value="2">2. år</option>
+              <option value="3">3. år</option>
+            </select>
+            <button type="submit" value="Submit" id="registerBtn">Registrer</button>
+          </form>
+        </article>
+
+        <article id="teacherRegister">
+          <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
+            <h2>Registrer ny foreleser</h2>
+            <label for="navn">Navn</label>
+            <input type="text" name="registerName" id="navn" required />
+            <label for="passord">Passord</label>
+            <input type="password" name="registerPassword" id="passord" required />
+            <label for="email">Mail</label>
+            <input type="email" name="registerEmail" id="email" required />
+            <label for="bilde">Bilde-URL</label>
+            <input type="text" name="registerBilde" id="bilde" required />
+            <input type="submit" name="submit" value="Registrer" />
+          </form>
+        </article>
       </section>
     </main>
   </body>

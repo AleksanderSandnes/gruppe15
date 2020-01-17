@@ -6,9 +6,11 @@
    $user_type = $_SESSION['login_type'];
 
    if($user_type == "brukeretabell") {
-        $ses_sql = mysqli_query($db,"SELECT brukerNavn, brukerEmail, brukerStudie, brukerAar, brukerType FROM brukeretabell WHERE brukerNavn = '$user_check'");
+        $ses_sql = mysqli_query($db,"SELECT brukerNavn, brukerEmail, brukerStudie, brukerAar, brukerType FROM $user_type WHERE brukerEmail = '$user_check'");
    } else if($user_type == "foreleser") {
-        $ses_sql = mysqli_query($db,"SELECT brukerNavn, brukerEmail, brukerURL, brukerType FROM foreleser WHERE brukerNavn = '$user_check'");
+        $ses_sql = mysqli_query($db,"SELECT brukerNavn, brukerEmail, brukerURL, brukerType FROM $user_type WHERE brukerEmail = '$user_check'");
+   } else if($user_type == "admin") {
+        $ses_sql = mysqli_query($db,"SELECT brukerNavn, brukerEmail, brukerType FROM $user_type WHERE brukerNavn = '$user_check'");
    }
 
    $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);

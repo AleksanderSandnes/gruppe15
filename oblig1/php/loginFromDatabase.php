@@ -9,7 +9,11 @@
       $myusername = mysqli_real_escape_string($db,$_POST['loginUserName']);
       $mypassword = mysqli_real_escape_string($db,$_POST['loginUserPassword']);
 
-      $sql = "SELECT idBruker FROM $typeBruker WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
+      if($typeBruker == "admin") {
+          $sql = "SELECT idBruker FROM $typeBruker WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
+      } else {
+          $sql = "SELECT idBruker FROM $typeBruker WHERE brukerEmail = '$myusername' and brukerPassord = '$mypassword'";
+      }
       $result = mysqli_query($db,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 

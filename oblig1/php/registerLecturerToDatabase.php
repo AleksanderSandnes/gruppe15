@@ -1,9 +1,10 @@
 <?php
     include("config.php");
-    $navn = $_POST['navn'];
-    $email = $_POST['email'];
-    $passord = $_POST['passord'];
-    $bildeURL = $_POST['bilde'];
+
+    $navn = $_POST['registerName'];
+    $email = $_POST['registerEmail'];
+    $passord = $_POST['registerPassword'];
+    $bildeURL = $_POST['registerBilde'];
 
     if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
