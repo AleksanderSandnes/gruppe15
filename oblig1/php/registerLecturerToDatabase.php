@@ -1,16 +1,11 @@
 <?php
-   include("config.php");
+    include("config.php");
     $navn = $_POST['navn'];
     $email = $_POST['email'];
     $passord = $_POST['passord'];
     $bildeURL = $_POST['bilde'];
 
     if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
-        $host = "localhost";
-        $dbUsername = "root";
-        $dbPassword = "Gruppe15...123";
-        $dbname = "brukere";
-
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
         if (mysqli_connect_error()) {
