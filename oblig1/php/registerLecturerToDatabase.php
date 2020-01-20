@@ -12,6 +12,17 @@ if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
 
     $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
+    //SENDER MAIL FOR Å GODTA BRUKER AV ADMIN
+    $to = 'aleksander.sandnes@hotmail.com';
+    $subject = 'User needs approval';
+    $message = 'The user {userName} needs your approval' .
+        '----------------------------------- ' . "\r\n" .
+        'Accept: ' . $accept_link . "\r\n" .
+        'Decline: ' . $decline_link . "\r\n";
+
+    $headers = 'From:aleksander.sandnes@hotmail.com' . "\r\n"; // Set FROM headers
+    mail($to, $subject, $message, $headers); // Send the email
+
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {
