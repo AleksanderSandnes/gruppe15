@@ -25,5 +25,16 @@ function oppstart() {
         } else {
             tekst.innerHTML = "Email";
         }
+        if(typeBruker.value == "anonym") {
+            document.getElementById("loginType").style.display = "none";
+            document.getElementById("loginName").style.display = "none";
+            document.getElementById("loginPass").style.display = "none";
+            document.getElementById("loginPassword").style.display = "none";
+        } else {
+            document.getElementById("loginType").style.display = "inline-block";
+            document.getElementById("loginName").style.display = "inline-block";
+            document.getElementById("loginPass").style.display = "inline-block";
+            document.getElementById("loginPassword").style.display = "inline-block";
+        }
     });
 }

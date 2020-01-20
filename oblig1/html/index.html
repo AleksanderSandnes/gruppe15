@@ -13,13 +13,14 @@
           <h2>Logg inn bruker</h2>
           <label id="loginType" for="loginName">Email</label>
           <input id="loginName" type="text" name="loginUserName" required value="1">
-          <label for="loginPassword">Passord</label>
+          <label id="loginPass" for="loginPassword">Passord</label>
           <input id="loginPassword" type="password" name="loginUserPassword" required value="1">
           <label for="userLoginTypeBruker">Type bruker:</label>
           <select id="userLoginTypeBruker" name="typeBruker" required>
             <option value="brukeretabell">Elev</option>
             <option value="foreleser">Foreleser</option>
             <option value="admin">Admin</option>
+            <option value="anonym">Anonym</option>
           </select>
           <button type="submit" value="Submit" id="loginBtn">Logg inn</button>
         </form>

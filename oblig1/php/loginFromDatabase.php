@@ -11,6 +11,8 @@
 
       if($typeBruker == "admin") {
           $sql = "SELECT idBruker FROM $typeBruker WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
+      } else if($typeBruker == "anonym") {
+          header("location: welcome$typeBruker.php");
       } else {
           $sql = "SELECT idBruker FROM $typeBruker WHERE brukerEmail = '$myusername' and brukerPassord = '$mypassword'";
       }
