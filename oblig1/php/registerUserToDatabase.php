@@ -16,9 +16,9 @@
             $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, brukerEmail, brukerStudie, brukerAar, brukerType) VALUES (?, ?, ?, ?, ?, 1)";
 
             $stmt = $conn->prepare($SELECT);
-            $stmt->bind_param("s",$brukerEmail);
+            $stmt->bind_param("s",$userEmail);
             $stmt->execute();
-            $stmt->bind_result($brukerEmail);
+            $stmt->bind_result($userEmail);
             $stmt->store_result();
             $rnum = $stmt->num_rows;
 

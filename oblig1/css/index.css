@@ -48,3 +48,7 @@ body > main > section > article > form {
     flex-direction: column;
     justify-content: space-between;
 }
+
+body > main > section > article:last-of-type {
+    display: none;
+}
