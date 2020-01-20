@@ -5,12 +5,27 @@ $userEmail = $_POST['registerEmail'];
 $userStudie = $_POST['registerStudie'];
 $userYear = $_POST['registerYear'];
 
+$accept_link = "http://158.39.188.215/gruppe15/oblig1/php/approval.php?e=" . $userEmail . "&h=" . hash('sha512', 'ACCEPT');
+$decline_link = "http://158.39.188.215/gruppe15/oblig1/php/approval.php?e="  . $userEmail . "&h=" . hash('sha512', 'DECLINE');
+
 if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear)) {
     $host = "localhost";
     $dbUsername = "root";
     $dbPassword = "Gruppe15...123";
     $dbname = "brukere";
     $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+
+    //SENDER MAIL FOR Å GODTA BRUKER AV ADMIN
+    $to = 'aleksander.sandnes@hotmail.com';
+    $subject = 'User needs approval';
+    $message = 'The user {userName} needs your approval' .
+        '----------------------------------- ' . "\r\n" .
+        'Accept: ' . $accept_link . "\r\n" .
+        'Decline: ' . $decline_link . "\r\n";
+
+    $headers = 'From:aleksander.sandnes@hotmail.com' . "\r\n"; // Set FROM headers
+    mail($to, $subject, $message, $headers); // Send the email
+
     if (mysqli_connect_error()) {
         die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
     } else {
