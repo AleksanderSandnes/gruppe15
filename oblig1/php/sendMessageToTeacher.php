@@ -19,7 +19,6 @@
 
             $stmt->close();
             $conn->close();
-            header("location:welcome$user_type.php");
         }
    } else {
         echo "Du må fylle ut alle feltene";
