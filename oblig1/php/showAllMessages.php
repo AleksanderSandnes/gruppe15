@@ -17,9 +17,9 @@
            // output data of each row
            while($rowFag = $resultFag->fetch_assoc()) {
                 if($rowFag["status"] == 0) {
-                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$rowFag["idMelding"].":</b>".$rowFag["melding"]."</p><p><b>svar: </b>Ikke noe svar</p></div>";
+                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$rowFag["idMelding"].":</b>".$rowFag["melding"]."</p><p><b>svar: </b>Ikke noe svar</p><form action='../php/reportMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Rapporter</button></form><form action='../php/commentMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Kommenter</button></form></div>";
                 } else {
-                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$rowFag["idMelding"].":</b>".$rowFag["melding"]."</p><p><b>svar: </b>".$rowFag["svar"]."</p></div>";
+                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$rowFag["idMelding"].":</b>".$rowFag["melding"]."</p><p><b>svar: </b>".$rowFag["svar"]."</p><form action='../php/reportMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Rapporter</button></form><form action='../php/commentMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Kommenter</button></form></div>";
                 }
            }
        } else {
