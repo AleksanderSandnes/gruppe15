@@ -23,7 +23,7 @@
                 }
            }
        } else {
-            echo "lol";
+            echo "Feil emnekode gett";
        }
        $conn->close();
   }
