@@ -1,12 +1,12 @@
 <?php
     include("config.php");
+    include("db.php");
 
     $navn = $_POST['registerName'];
     $email = $_POST['registerEmail'];
     $passord = $_POST['registerPassword'];
-    $bildeURL = $_POST['registerBilde'];
 
-    if (!empty($navn) || !empty($email) || !empty($passord) || !empty($bildeURL)) {
+    if (!empty($navn) || !empty($email) || !empty($passord)) {
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
         if (mysqli_connect_error()) {
@@ -25,8 +25,24 @@
             if ($rnum == 0) {
                 $stmt->close();
                 $stmt = $conn->prepare($INSERT);
-                $stmt->bind_param("ssss", $navn, $email, $passord, $bildeURL);
+                $stmt->bind_param("ssss", $navn, $email, $passord, $_FILES['registerBilde']['name']);
                 $stmt->execute();
+                //bilde
+                if (($_FILES['registerBilde']['name']!="")){
+                     $target_dir = "../images/";
+                     $file = $_FILES['registerBilde']['name'];
+                     $path = pathinfo($file);
+                     $filename = $path['filename'];
+                     $ext = $path['extension'];
+                     $temp_name = $_FILES['registerBilde']['tmp_name'];
+                     $path_filename_ext = $target_dir.$filename.".".$ext;
+                     if (file_exists($path_filename_ext)) {
+
+                     } else{
+                        move_uploaded_file($temp_name,$path_filename_ext);
+                        echo "Congratulations! File Uploaded Successfully.<br>";
+                     }
+                }
                 echo "Bruker lagt til";
             } else {
                 echo "Bruker allerede registrert";

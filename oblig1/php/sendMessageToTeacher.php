@@ -10,7 +10,7 @@
         if (mysqli_connect_error()) {
             die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
         } else {
-            $INSERT = "INSERT INTO melding (idBrukerFra, melding, idBrukerTil) VALUES (?, ?, ?)";
+            $INSERT = "INSERT INTO melding (idBrukerFra, melding, idFag) VALUES (?, ?, ?)";
 
             $stmt = $conn->prepare($INSERT);
             $stmt->bind_param("isi", $login_id, $melding, $teacherId);

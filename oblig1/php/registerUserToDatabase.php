@@ -1,5 +1,6 @@
 <?php
     include("config.php");
+    include("db.php");
 
     $userName = $_POST['registerName'];
     $userPassword = $_POST['registerPassword'];

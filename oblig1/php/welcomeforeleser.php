@@ -12,8 +12,15 @@
    if (mysqli_connect_error()) {
        die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
    } else {
-       $SELECTMeldinger = "SELECT * FROM melding WHERE idBrukerTil = $login_id";
-       $SELECTFag = "SELECT DISTINCT fagNavn FROM fag WHERE idBruker = $login_id";
+       $SELECTMeldinger = "SELECT brukere.melding.melding, brukere.melding.idMelding, brukere.melding.status
+                            FROM brukere.melding
+                            INNER JOIN brukere.fag
+                            	ON brukere.melding.idFag = brukere.fag.idFag
+                            INNER JOIN brukere.foreleser
+                            	ON brukere.fag.idBruker = brukere.foreleser.idBruker
+                            WHERE brukere.foreleser.idBruker = $login_id;";
+       $SELECTMeldingerr = "SELECT * FROM melding WHERE idBrukerTil = $login_id";
+       $SELECTFag = "SELECT * FROM fag WHERE idBruker = $login_id GROUP BY fagNavn";
        $resultMeldinger = $conn->query($SELECTMeldinger);
        $resultFag = $conn->query($SELECTFag);
        $meldinger = "";
@@ -36,7 +43,7 @@
        if ($resultFag->num_rows > 0) {
            // output data of each row
            while($rowFag = $resultFag->fetch_assoc()) {
-               $fag .= "<li>".$rowFag["fagNavn"]. "</li>";
+               $fag .= "<li>".$rowFag["idFag"].": ".$rowFag["fagNavn"]."</li>";
            }
        }
        $conn->close();

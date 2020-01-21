@@ -65,17 +65,13 @@
               <option value="3">Dataingeniør</option>
             </select>
             <label for="userRegisterYear">Kull:</label>
-            <select id="userRegisterYear" name="registerYear" required>
-              <option value="1">1. år</option>
-              <option value="2">2. år</option>
-              <option value="3">3. år</option>
-            </select>
+            <input type="text" id="userRegisterYear" name="registerYear">
             <button type="submit" value="Submit" id="registerBtn">Registrer</button>
           </form>
         </article>
 
         <article id="teacherRegister">
-          <form name="registration" action="../php/registerLecturerToDatabase.php" method="post">
+          <form name="registration" action="../php/registerLecturerToDatabase.php" method="post" enctype="multipart/form-data">
             <h2>Registrer ny foreleser</h2>
             <label for="navn">Navn</label>
             <input type="text" name="registerName" id="navn" required />
@@ -83,8 +79,8 @@
             <input type="password" name="registerPassword" id="passord" required />
             <label for="email">Mail</label>
             <input type="email" name="registerEmail" id="email" required />
-            <label for="bilde">Bilde-URL</label>
-            <input type="text" name="registerBilde" id="bilde" required />
+            <label for="bilde">Bilde</label>
+            <input type="file" accept="image/jpeg" name="registerBilde" id="bilde" required />
             <input type="submit" name="submit" value="Registrer" />
           </form>
         </article>
