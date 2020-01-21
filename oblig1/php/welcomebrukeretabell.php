@@ -12,8 +12,8 @@
   if (mysqli_connect_error()) {
       die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
   } else {
-      $SELECTFag = "SELECT * FROM fag GROUP BY idFag";
-      $SELECTForeleser = "SELECT * FROM foreleser INNER JOIN fag ON foreleser.idBruker = fag.idBruker GROUP BY idFag";
+      $SELECTFag = "SELECT DISTINCT * FROM fag";
+      $SELECTForeleser = "SELECT DISTINCT * FROM foreleser INNER JOIN fag ON foreleser.idBruker = fag.idBruker";
       $resultFag = $conn->query($SELECTFag);
       $resultForeleser = $conn->query($SELECTForeleser);
       $fag = "";

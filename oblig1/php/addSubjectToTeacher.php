@@ -24,7 +24,7 @@
             if($rnum == 0) {
                 $nummer = rand(1000, 9999);
             } else {
-                $SELECTDISTINCT = "SELECT idFag FROM fag WHERE fagNavn = '$fag' GROUP BY fagNavn";
+                $SELECTDISTINCT = "SELECT DISTINCT * FROM fag WHERE fagNavn = '$fag'";
                 $result = mysqli_query($conn, $SELECTDISTINCT);
                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 $nummer = $row['idFag'];
