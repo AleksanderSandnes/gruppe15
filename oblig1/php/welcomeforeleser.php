@@ -20,7 +20,7 @@
                             	ON brukere.fag.idBruker = brukere.foreleser.idBruker
                             WHERE brukere.foreleser.idBruker = $login_id;";
        $SELECTMeldingerr = "SELECT * FROM melding WHERE idBrukerTil = $login_id";
-       $SELECTFag = "SELECT * FROM fag WHERE idBruker = $login_id GROUP BY fagNavn";
+       $SELECTFag = "SELECT DISTINCT * FROM fag WHERE idBruker = $login_id";
        $resultMeldinger = $conn->query($SELECTMeldinger);
        $resultFag = $conn->query($SELECTFag);
        $meldinger = "";
