@@ -12,9 +12,9 @@
         <form action="../php/loginFromDatabase.php" id="loginForm" method="POST">
           <h2>Logg inn bruker</h2>
           <label id="loginType" for="loginName">Email</label>
-          <input id="loginName" type="text" name="loginUserName" required value="1">
+          <input id="loginName" type="text" name="loginUserName" required>
           <label id="loginPass" for="loginPassword">Passord</label>
-          <input id="loginPassword" type="password" name="loginUserPassword" required value="1">
+          <input id="loginPassword" type="password" name="loginUserPassword" required>
           <label for="userLoginTypeBruker">Type bruker:</label>
           <select id="userLoginTypeBruker" name="typeBruker" required>
             <option value="brukeretabell">Elev</option>
@@ -28,11 +28,11 @@
         <form action="../php/userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
           <h2>Bruker glemt passord</h2>
           <label for="forgotPasswordEmail">Epost</label>
-          <input id="forgotPasswordEmail" type="text" name="forgotPasswordEmail" required value="1">
+          <input id="forgotPasswordEmail" type="text" name="forgotPasswordEmail" required>
           <label for="forgotPasswordOldPassword">Gammelt passord</label>
-          <input id="forgotPasswordOldPassword" type="text" name="forgotPasswordOldPassword" required value="1">
+          <input id="forgotPasswordOldPassword" type="text" name="forgotPasswordOldPassword" required>
           <label for="forgotPasswordNewPassword">Nytt passord</label>
-          <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required value="1">
+          <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required>
           <label for="userForgotPasswordTypeBruker">Type bruker:</label>
           <select id="userForgotPasswordTypeBruker" name="typeBruker" required>
             <option value="brukeretabell">Elev</option>
@@ -53,11 +53,11 @@
           <form action="../php/registerUserToDatabase.php" method="POST">
             <h2>Registrer ny bruker</h2>
             <label for="registerName">Navn</label>
-            <input id="registerName" type="text" name="registerName" required value="1">
+            <input id="registerName" type="text" name="registerName" required>
             <label for="registerPassword">Passord</label>
-            <input id="registerPassword" type="password" name="registerPassword" required value="1">
+            <input id="registerPassword" type="password" name="registerPassword" required>
             <label for="registerEmail">Email</label>
-            <input id="registerEmail" type="text" name="registerEmail" required value="1">
+            <input id="registerEmail" type="email" name="registerEmail" required>
             <label for="userRegisterStudie">Studieretning:</label>
             <select id="userRegisterStudie" name="registerStudie" required>
               <option value="1">Informatikk</option>

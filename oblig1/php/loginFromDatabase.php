@@ -22,10 +22,6 @@
 
       $count = mysqli_num_rows($result);
 
-      // If result matched $myusername and $mypassword, table row must be 1 row
-
-      echo "<p>'$count'</p><p>'$myusername'</p><p>'$mypassword'</p>";
-
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
          $_SESSION['login_type'] = $typeBruker;

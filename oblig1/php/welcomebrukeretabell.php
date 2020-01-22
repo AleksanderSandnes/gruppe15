@@ -22,7 +22,7 @@
       if ($resultFag->num_rows > 0) {
           // output data of each row
           while($rowFag = $resultFag->fetch_assoc()) {
-              $fag .= "<option value='".$rowFag["idFag"]."'>".$rowFag["fagNavn"]."</option>";
+              $fag .= "<option value='".$rowFag["idFag"]."'>".$rowFag["idFag"].": ".$rowFag["fagNavn"]."</option>";
           }
       }
       if ($resultForeleser->num_rows > 0) {
