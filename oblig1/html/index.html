@@ -59,13 +59,9 @@
             <label for="registerEmail">Email</label>
             <input id="registerEmail" type="email" name="registerEmail" required>
             <label for="userRegisterStudie">Studieretning:</label>
-            <select id="userRegisterStudie" name="registerStudie" required>
-              <option value="1">Informatikk</option>
-              <option value="2">Informasjonssytemer</option>
-              <option value="3">Dataingeniør</option>
-            </select>
+            <input id="userRegisterStudie" type="text" name="registerStudie">
             <label for="userRegisterYear">Kull:</label>
-            <input type="text" id="userRegisterYear" name="registerYear">
+            <input type="text" minlength="4" maxlength="4" id="userRegisterYear" name="registerYear">
             <button type="submit" value="Submit" id="registerBtn">Registrer</button>
           </form>
         </article>

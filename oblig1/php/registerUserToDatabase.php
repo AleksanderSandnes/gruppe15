@@ -26,7 +26,7 @@
             if ($rnum == 0) {
                 $stmt->close();
                 $stmt = $conn->prepare($INSERT);
-                $stmt->bind_param("sssii", $userName, $userPassword, $userEmail, $userStudie, $userYear);
+                $stmt->bind_param("ssssi", $userName, $userPassword, $userEmail, $userStudie, $userYear);
                 $stmt->execute();
                 echo "Bruker lagt til";
             } else {
