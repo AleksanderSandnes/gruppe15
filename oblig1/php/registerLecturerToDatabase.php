@@ -29,7 +29,7 @@
                 $stmt->execute();
                 //bilde
                 if (($_FILES['registerBilde']['name']!="")){
-                     $target_dir = "/var/www/html/branch/teste/gruppe15/oblig1/images";
+                     $target_dir = "/var/www/html/branch/teste/gruppe15/oblig1/images/";
                      $file = $_FILES['registerBilde']['name'];
                      $path = pathinfo($file);
                      $filename = $path['filename'];
