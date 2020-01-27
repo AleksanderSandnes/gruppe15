@@ -13,7 +13,7 @@
             die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
         } else {
             $SELECT = "SELECT brukerEmail FROM foreleser WHERE brukerEmail = ? LIMIT 1";
-            $INSERT = "INSERT INTO foreleser (brukerNavn, brukerEmail, brukerPassord, brukerURL, brukerType) VALUES (?, ?, ?, ?, 2)";
+            $INSERT = "INSERT INTO foreleser (brukerNavn, brukerEmail, brukerPassord, brukerURL, brukerType, godkjentAvAdmin) VALUES (?, ?, ?, ?, 2,0)";
 
             $stmt = $conn->prepare($SELECT);
             $stmt->bind_param("s",$email);

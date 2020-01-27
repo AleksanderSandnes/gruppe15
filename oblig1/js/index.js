@@ -28,13 +28,17 @@ function oppstart() {
         if(typeBruker.value == "anonym") {
             document.getElementById("loginType").style.display = "none";
             document.getElementById("loginName").style.display = "none";
+            document.getElementById("loginName").required = false;
             document.getElementById("loginPass").style.display = "none";
             document.getElementById("loginPassword").style.display = "none";
+            document.getElementById("loginPassword").required = false;
         } else {
             document.getElementById("loginType").style.display = "inline-block";
             document.getElementById("loginName").style.display = "inline-block";
+            document.getElementById("loginName").required = true;
             document.getElementById("loginPass").style.display = "inline-block";
             document.getElementById("loginPassword").style.display = "inline-block";
+            document.getElementById("loginPassword").required = true;
         }
     });
 }
