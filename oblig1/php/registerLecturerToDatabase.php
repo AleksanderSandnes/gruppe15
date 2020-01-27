@@ -28,22 +28,13 @@
                 $stmt->bind_param("ssss", $navn, $email, $passord, $_FILES['registerBilde']['name']);
                 $stmt->execute();
                 //bilde
-                if (($_FILES['registerBilde']['name']!="")){
-                     $target_dir = "sudo /var/www/html/branch/teste/gruppe15/oblig1/images/";
-                     $file = $_FILES['registerBilde']['name'];
-                     $path = pathinfo($file);
-                     $filename = $path['filename'];
-                     $ext = $path['extension'];
-                     $temp_name = $_FILES['registerBilde']['tmp_name'];
-                     $path_filename_ext = $target_dir.$filename.".".$ext;
-                     echo $path_filename_ext;
-                     if (file_exists($path_filename_ext)) {
+                $info = pathinfo($_FILES['registerBilde']['name']);
+                $ext = $info['extension']; // get the extension of the file
+                $newname = $_FILES['registerBilde']['name'].$ext;
 
-                     } else{
-                        move_uploaded_file($temp_name,$path_filename_ext);
-                        echo "Congratulations! File Uploaded Successfully.<br>";
-                     }
-                }
+                $target = '../images/'.$newname;
+                move_uploaded_file( $_FILES['registerBilde']['tmp_name'], $target);
+                echo $target."<br><br>";
                 echo "Bruker lagt til";
             } else {
                 echo "Bruker allerede registrert";
