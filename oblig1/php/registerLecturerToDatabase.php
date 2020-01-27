@@ -29,13 +29,14 @@
                 $stmt->execute();
                 //bilde
                 if (($_FILES['registerBilde']['name']!="")){
-                     $target_dir = "../images/";
+                     $target_dir = '/var/www/html/' . $_SESSION['URL'] .'/' . $_FILES["file"]["name"];
                      $file = $_FILES['registerBilde']['name'];
                      $path = pathinfo($file);
                      $filename = $path['filename'];
                      $ext = $path['extension'];
                      $temp_name = $_FILES['registerBilde']['tmp_name'];
                      $path_filename_ext = $target_dir.$filename.".".$ext;
+                     echo $path_filename_ext;
                      if (file_exists($path_filename_ext)) {
 
                      } else{
