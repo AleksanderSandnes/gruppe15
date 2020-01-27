@@ -28,13 +28,24 @@
                 $stmt->bind_param("ssss", $navn, $email, $passord, $_FILES['registerBilde']['name']);
                 $stmt->execute();
                 //bilde
-                $info = pathinfo($_FILES['registerBilde']['name']);
-                $ext = $info['extension']; // get the extension of the file
-                $newname = $_FILES['registerBilde']['name'].$ext;
+                if (($_FILES['registerBilde']['name']!="")){
+                // Where the file is going to be stored
+                     $target_dir = "../images/";
+                     $file = $_FILES['registerBilde']['name'];
+                     $path = pathinfo($file);
+                     $filename = $path['filename'];
+                     $ext = $path['extension'];
+                     $temp_name = $_FILES['registerBilde']['tmp_name'];
+                     $path_filename_ext = $target_dir.$filename.".".$ext;
 
-                $target = '../images/'.$newname;
-                move_uploaded_file( $_FILES['registerBilde']['tmp_name'], $target);
-                echo $target."<br><br>";
+                     // Check if file already exists
+                     if (file_exists($path_filename_ext)) {
+                          echo "Sorry, file already exists.<br>";
+                     } else {
+                         move_uploaded_file($temp_name,$path_filename_ext);
+                         echo "Congratulations! File Uploaded Successfully.<br>";
+                     }
+                }
                 echo "Bruker lagt til";
             } else {
                 echo "Bruker allerede registrert";
