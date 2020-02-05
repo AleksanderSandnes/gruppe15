@@ -13,7 +13,7 @@
       die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
   } else {
       $SELECTFag = "SELECT * FROM fag GROUP BY fagNavn";
-      $SELECTForeleser = "SELECT * FROM foreleser INNER JOIN fag ON foreleser.idBruker = fag.idBruker GROUP BY idFag";
+      $SELECTForeleser = "SELECT * FROM fag INNER JOIN foreleser ON foreleser.idBruker = fag.idBruker GROUP BY idFag";
       $resultFag = $conn->query($SELECTFag);
       $resultForeleser = $conn->query($SELECTForeleser);
       $fag = "";
