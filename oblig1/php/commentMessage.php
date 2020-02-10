@@ -1,8 +1,9 @@
 <?php
   include("config.php");
   include("db.php");
+  include('inputValidation.php');
 
-  $meldingID = $_POST['meldingID'];
+  $meldingID = test_input($_POST['meldingID']);
 
   $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 

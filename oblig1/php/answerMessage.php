@@ -1,26 +1,35 @@
 <?php
-  include('session.php');
-  include('db.php');
+  include('cookiemonster.php');
 
-  $meldingsId = $_POST['meldingsId'];
+  if(checkCookies(2)) {
+      include('session.php');
+      include('db.php');
+      include('inputValidation.php');
 
-  $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+      $meldingsId = test_input($_POST['meldingsId']);
 
-  if (mysqli_connect_error()) {
-      die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
-  } else {
-      $SELECTMeldinger = "SELECT melding FROM melding WHERE idMelding = $meldingsId";
-      $resultMeldinger = $conn->query($SELECTMeldinger);
-      $meldinger = "";
+      $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
-      if ($resultMeldinger->num_rows > 0) {
-          // output data of each row
-          while($rowMelding = $resultMeldinger->fetch_assoc()) {
-                $meldinger = $rowMelding["melding"];
+      if (mysqli_connect_error()) {
+          die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
+      } else {
+          $SELECTMeldinger = "SELECT melding FROM melding WHERE idMelding = $meldingsId";
+          $resultMeldinger = $conn->query($SELECTMeldinger);
+          $meldinger = "";
+
+          if ($resultMeldinger->num_rows > 0) {
+              // output data of each row
+              while($rowMelding = $resultMeldinger->fetch_assoc()) {
+                    $meldinger = $rowMelding["melding"];
+              }
           }
-      }
-      $conn->close();
- }
+          $conn->close();
+     }
+  } else {
+      delCookies("emailCookie");
+      delCookies("passwordCookie");
+      header("Location: ../html/index.html");
+  }
 
 ?><html">
     <p><b>Melding du svarer på:</b></p>

@@ -1,12 +1,13 @@
 <?php
     include("config.php");
     include("db.php");
+    include('inputValidation.php');
 
-    $userName = $_POST['registerName'];
-    $userPassword = $_POST['registerPassword'];
-    $userEmail = $_POST['registerEmail'];
-    $userStudie = $_POST['registerStudie'];
-    $userYear = $_POST['registerYear'];
+    $userName = test_input($_POST['registerName']);
+    $userPassword = test_input($_POST['registerPassword']);
+    $userEmail = test_input($_POST['registerEmail']);
+    $userStudie = test_input($_POST['registerStudie']);
+    $userYear = test_input($_POST['registerYear']);
 
     if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear)) {
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);

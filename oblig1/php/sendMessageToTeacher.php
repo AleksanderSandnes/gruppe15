@@ -1,27 +1,36 @@
 <?php
-   include('session.php');
-   include('db.php');
+   include('cookiemonster.php');
 
-   $teacherId = $_POST['teacher'];
-   $melding = $_POST['message'];
+   if(checkCookies(1)) {
+       include('session.php');
+       include('db.php');
+       include('inputValidation.php');
 
-   if (!empty($teacherId) || !empty($melding)) {
-        $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
-        if (mysqli_connect_error()) {
-            die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
-        } else {
-            $INSERT = "INSERT INTO melding (idBrukerFra, melding, idFag, svar, upassende, kommentar, status) VALUES (?, ?, ?, '', 0, '', 0)";
+       $teacherId = test_input($_POST['teacher']);
+       $melding = test_input($_POST['message']);
 
-            $stmt = $conn->prepare($INSERT);
-            $stmt->bind_param("isi", $login_id, $melding, $teacherId);
-            $stmt->execute();
-            echo "Meldingen er sendt";
+       if (!empty($teacherId) || !empty($melding)) {
+            $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+            if (mysqli_connect_error()) {
+                die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
+            } else {
+                $INSERT = "INSERT INTO melding (idBrukerFra, melding, idFag, svar, upassende, kommentar, status) VALUES (?, ?, ?, '', 0, '', 0)";
 
-            $stmt->close();
-            $conn->close();
-        }
+                $stmt = $conn->prepare($INSERT);
+                $stmt->bind_param("isi", $login_id, $melding, $teacherId);
+                $stmt->execute();
+                echo "Meldingen er sendt";
+
+                $stmt->close();
+                $conn->close();
+            }
+       } else {
+            echo "Du må fylle ut alle feltene";
+            die();
+       }
    } else {
-        echo "Du må fylle ut alle feltene";
-        die();
+       delCookies("emailCookie");
+       delCookies("passwordCookie");
+       header("Location: ../html/index.html");
    }
 ?>

@@ -1,8 +1,9 @@
 <?php
    include('config.php');
    include('db.php');
+   include('inputValidation.php');
 
-   $fagKode = $_POST['fagManVilSe'];
+   $fagKode = test_input($_POST['fagManVilSe']);
 
    $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 

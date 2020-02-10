@@ -1,7 +1,10 @@
 <?php
    include('config.php');
    include('db.php');
-   session_start();
+   if(!isset($_SESSION))
+   {
+       session_start();
+   }
 
    $user_check = $_SESSION['login_user'];
    $user_type = $_SESSION['login_type'];
@@ -25,7 +28,7 @@
    }
 
    if(!isset($_SESSION['login_user'])){
-      header("location:welcome$user_type.php");
+      header("location: ../html/index.html");
       die();
    }
 ?>

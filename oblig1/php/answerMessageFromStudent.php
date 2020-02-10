@@ -1,28 +1,37 @@
 <?php
-   include('session.php');
-   include('db.php');
+   include('cookiemonster.php');
 
-   $meldingsId = $_POST['meldingsId'];
-   $answer = $_POST['answer'];
+   if(checkCookies(2)) {
+       include('session.php');
+       include('db.php');
+       include('inputValidation.php');
 
-   if (!empty($meldingsId) || !empty($answer)) {
-        $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
-        if (mysqli_connect_error()) {
-            die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
-        } else {
-            $UPDATE = "UPDATE melding SET status=1, svar='$answer' WHERE idMelding='$meldingsId'";
-            $INSERT = "INSERT INTO melding (idBrukerFra, melding, idBrukerTil) VALUES (?, ?, ?)";
+       $meldingsId = test_input($_POST['meldingsId']);
+       $answer = test_input($_POST['answer']);
 
-            $stmt = $conn->prepare($UPDATE);
-            $stmt->execute();
-            echo "Meldingen er sendt";
+       if (!empty($meldingsId) || !empty($answer)) {
+            $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+            if (mysqli_connect_error()) {
+                die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
+            } else {
+                $UPDATE = "UPDATE melding SET status=1, svar='$answer' WHERE idMelding='$meldingsId'";
+                $INSERT = "INSERT INTO melding (idBrukerFra, melding, idBrukerTil) VALUES (?, ?, ?)";
 
-            $stmt->close();
-            $conn->close();
-            header("location:welcome$user_type.php");
-        }
+                $stmt = $conn->prepare($UPDATE);
+                $stmt->execute();
+                echo "Meldingen er sendt";
+
+                $stmt->close();
+                $conn->close();
+                header("location:welcome$user_type.php");
+            }
+       } else {
+            echo "Du må fylle ut alle feltene";
+            die();
+       }
    } else {
-        echo "Du må fylle ut alle feltene";
-        die();
+       delCookies("emailCookie");
+       delCookies("passwordCookie");
+       header("Location: ../html/index.html");
    }
 ?>

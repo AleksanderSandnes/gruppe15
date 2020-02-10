@@ -1,10 +1,11 @@
 <?php
     include("config.php");
     include("db.php");
+    include('inputValidation.php');
 
-    $navn = $_POST['registerName'];
-    $email = $_POST['registerEmail'];
-    $passord = $_POST['registerPassword'];
+    $navn = test_input($_POST['registerName']);
+    $email = test_input($_POST['registerEmail']);
+    $passord = test_input($_POST['registerPassword']);
 
     if (!empty($navn) || !empty($email) || !empty($passord)) {
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
@@ -28,6 +29,7 @@
                 $stmt->bind_param("ssss", $navn, $email, $passord, $_FILES['registerBilde']['name']);
                 $stmt->execute();
                 //bilde
+                //BURDE BRUKE REGEX
                 if (($_FILES['registerBilde']['name']!="")){
                 // Where the file is going to be stored
                      $target_dir = "../images/";

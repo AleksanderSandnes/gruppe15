@@ -1,14 +1,16 @@
 <?php
    include("config.php");
+   include("cookiemonster.php");
    include("db.php");
+   include('inputValidation.php');
    session_start();
 
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form
-      $typeBruker = mysqli_real_escape_string($db,$_POST['typeBruker']);
+      $typeBruker = test_input(mysqli_real_escape_string($db,$_POST['typeBruker']));
 
-      $myusername = mysqli_real_escape_string($db,$_POST['loginUserName']);
-      $mypassword = mysqli_real_escape_string($db,$_POST['loginUserPassword']);
+      $myusername = test_input(mysqli_real_escape_string($db,$_POST['loginUserName']));
+      $mypassword = test_input(mysqli_real_escape_string($db,md5($_POST['loginUserPassword'])));
 
       if($typeBruker == "admin") {
           $sql = "SELECT idBruker FROM $typeBruker WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
@@ -25,10 +27,12 @@
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
          $_SESSION['login_type'] = $typeBruker;
+         setCookies("emailCookie", md5($myusername));
+         setCookies("passwordCookie", $mypassword);
          header("location: welcome$typeBruker.php");
       } else {
          $error = "Your Login Name or Password is invalid";
-         echo "Feil brukernavn eller passord...eller begge.";
+         exit("<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>");
       }
    }
 ?>

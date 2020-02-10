@@ -1,40 +1,43 @@
 <?php
-  include('session.php');
-  include('db.php');
-  if ($login_type == 2) {
-       header("location: welcomeTeacher.php");
-  } else if ($login_type == 3) {
-       header("location: welcomeAdmin.php");
-  }
+  include('cookiemonster.php');
 
-  $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+  if(checkCookies(1)) {
+      include('session.php');
+      include('db.php');
 
-  if (mysqli_connect_error()) {
-      die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
+      $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+
+      if (mysqli_connect_error()) {
+          die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
+      } else {
+          $SELECTFag = "SELECT * FROM fag GROUP BY fagNavn";
+          $SELECTForeleser = "SELECT * FROM fag INNER JOIN foreleser ON foreleser.idBruker = fag.idBruker GROUP BY idFag";
+          $resultFag = $conn->query($SELECTFag);
+          $resultForeleser = $conn->query($SELECTForeleser);
+          $fag = "";
+          $bilder = "";
+
+          if ($resultFag->num_rows > 0) {
+              // output data of each row
+              while($rowFag = $resultFag->fetch_assoc()) {
+                  $fag .= "<option value='".$rowFag["idFag"]."'>".$rowFag["idFag"].": ".$rowFag["fagNavn"]."</option>";
+              }
+          }
+          if ($resultForeleser->num_rows > 0) {
+              // output data of each row
+              while($rowForeleser = $resultForeleser->fetch_assoc()) {
+                  $bilder .= "<div><img class='bildeTeacher' style='width:10%' id='".$rowForeleser["idFag"]."' src='../images/".$rowForeleser["brukerURL"]."'></div>";
+              }
+          }
+          $conn->close();
+      }
   } else {
-      $SELECTFag = "SELECT * FROM fag GROUP BY fagNavn";
-      $SELECTForeleser = "SELECT * FROM fag INNER JOIN foreleser ON foreleser.idBruker = fag.idBruker GROUP BY idFag";
-      $resultFag = $conn->query($SELECTFag);
-      $resultForeleser = $conn->query($SELECTForeleser);
-      $fag = "";
-      $bilder = "";
-
-      if ($resultFag->num_rows > 0) {
-          // output data of each row
-          while($rowFag = $resultFag->fetch_assoc()) {
-              $fag .= "<option value='".$rowFag["idFag"]."'>".$rowFag["idFag"].": ".$rowFag["fagNavn"]."</option>";
-          }
-      }
-      if ($resultForeleser->num_rows > 0) {
-          // output data of each row
-          while($rowForeleser = $resultForeleser->fetch_assoc()) {
-              $bilder .= "<div><img class='bildeTeacher' style='width:10%' id='".$rowForeleser["idFag"]."' src='../images/".$rowForeleser["brukerURL"]."'></div>";
-          }
-      }
-      $conn->close();
- }
+      delCookies("emailCookie");
+      delCookies("passwordCookie");
+      header("Location: ../html/index.html");
+  }
 ?>
-<html">
+<html>
 
    <head>
       <title>Welcome </title>
@@ -46,7 +49,7 @@
       <form action='../php/sendMessageToTeacher.php' method='POST'>
         <p>Send melding til foreleser:</p>
         <select name='teacher' id='velg'><?php echo $fag; ?></select>
-        <textarea rows='4' cols='50' placeholder='Send melding ang. ønsket emne/fag' name='message'> </textarea>
+        <textarea rows='4' cols='50' name='message'> </textarea>
         <button type='submit' value='Submit'>Send melding</button>
       </form>
       <div>
