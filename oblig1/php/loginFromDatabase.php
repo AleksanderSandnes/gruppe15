@@ -1,30 +1,37 @@
 <?php
-   include("config.php");
    include("cookiemonster.php");
    include("db.php");
    include('inputValidation.php');
    session_start();
 
+   $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form
-      $typeBruker = test_input(mysqli_real_escape_string($db,$_POST['typeBruker']));
+      $typeBruker = test_input($_POST['typeBruker']);
 
-      $myusername = test_input(mysqli_real_escape_string($db,$_POST['loginUserName']));
-      $mypassword = test_input(mysqli_real_escape_string($db,md5($_POST['loginUserPassword'])));
+      $myusername = test_input($_POST['loginUserName']);
+      $mypassword = test_input(md5($_POST['loginUserPassword']));
+
+      $sql = "";
 
       if($typeBruker == "admin") {
-          $sql = "SELECT idBruker FROM $typeBruker WHERE brukerNavn = '$myusername' and brukerPassord = '$mypassword'";
+          $sql = "SELECT idBruker FROM admin WHERE brukerNavn = ? and brukerPassord = ?";
       } else if($typeBruker == "anonym") {
           header("location: welcome$typeBruker.php");
-      } else {
-          $sql = "SELECT idBruker FROM $typeBruker WHERE brukerEmail = '$myusername' and brukerPassord = '$mypassword'";
+      } else if($typeBruker == "foreleser") {
+          $sql = "SELECT idBruker FROM foreleser WHERE brukerEmail = ? and brukerPassord = ?";
+      } else if($typeBruker == "brukeretabell") {
+          $sql = "SELECT idBruker FROM brukeretabell WHERE brukerEmail = ? and brukerPassord = ?";
       }
-      $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      $stmtsql = $conn->prepare($sql);
+      $stmtsql->bind_param("ss",$myusername,$mypassword);
+      $stmtsql->execute();
+      $stmtsql->bind_result($idBrukeren);
+      $stmtsql->store_result();
+      $rnumm = $stmtsql->num_rows;
 
-      $count = mysqli_num_rows($result);
-
-      if($count == 1) {
+      if($rnumm == 1) {
          $_SESSION['login_user'] = $myusername;
          $_SESSION['login_type'] = $typeBruker;
          setCookies("emailCookie", md5($myusername));
