@@ -10,15 +10,19 @@
        if (mysqli_connect_error()) {
            die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
        } else {
-           $SELECTFag = "SELECT * FROM foreleser";
-           $resultFag = $conn->query($SELECTFag);
+           $SELECTFag = "SELECT godkjentAvAdmin, idBruker, brukerNavn, brukerEmail FROM foreleser";
+           $stmtSELECTFag = $conn->prepare($SELECTFag);
+           $stmtSELECTFag->execute();
+           $stmtSELECTFag->bind_result($godkjentAvAdmin, $idBruker, $brukerNavn, $brukerEmail);
+           $stmtSELECTFag->store_result();
+           $rnumSELECTFag = $stmtSELECTFag->num_rows;
            $fag = "";
 
-           if ($resultFag->num_rows > 0) {
+           if ($rnumSELECTFag > 0) {
                // output data of each row
-               while($rowFag = $resultFag->fetch_assoc()) {
-                    if($rowFag["godkjentAvAdmin"] == 0) {
-                        $fag .= "<div style='padding: 10px; border: 1px solid black;'><p>".$rowFag["idBruker"].": ".$rowFag["brukerNavn"]."</p><p>".$rowFag["brukerEmail"]."</p><form action='../php/approveTeacher.php' method='POST'><input type='text' style='display:none' name='brukerID' value='".$rowFag["idBruker"]."'><button type='submit' value='submit'>Godkjenn</button></form><form action='../php/dontApproveTeacher.php' method='POST'><input type='text' style='display:none' name='brukerID' value='".$rowFag["idBruker"]."'><button type='submit' value='submit'>Ikke godkjenn</button></form></div>";
+               while($stmtSELECTFag->fetch()) {
+                    if($godkjentAvAdmin == 0) {
+                        $fag .= "<div style='padding: 10px; border: 1px solid black;'><p>".$idBruker.": ".$brukerNavn."</p><p>".$brukerEmail."</p><form action='../php/approveTeacher.php' method='POST'><input type='text' style='display:none' name='brukerID' value='".$idBruker."'><button type='submit' value='submit'>Godkjenn</button></form><form action='../php/dontApproveTeacher.php' method='POST'><input type='text' style='display:none' name='brukerID' value='".$idBruker."'><button type='submit' value='submit'>Ikke godkjenn</button></form></div>";
                     }
                }
            } else {

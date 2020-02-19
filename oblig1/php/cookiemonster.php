@@ -27,21 +27,25 @@
             $cookiePassordet = getCookies("passwordCookie");
 
             if($login_type == 1) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM brukeretabell WHERE brukerEmailHash = '$cookieEmailen' AND brukerPassord = '$cookiePassordet';";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM brukeretabell WHERE brukerEmailHash = ? AND brukerPassord = ?;";
             } else if($login_type == 2) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM foreleser WHERE brukerEmailHash = '$cookieEmailen' AND brukerPassord = '$cookiePassordet'";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM foreleser WHERE brukerEmailHash = ? AND brukerPassord = ?";
             } else if($login_type == 3) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM admin WHERE brukerEmailHash = '$cookieEmailen' AND brukerPassord = '$cookiePassordet'";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM admin WHERE brukerEmailHash = ? AND brukerPassord = ?";
             }
+            $stmtsqlen = $conn->prepare($sqlen);
+            $stmtsqlen->bind_param("ss",$cookieEmailen, $cookiePassordet);
+            $stmtsqlen->execute();
+            $stmtsqlen->bind_result($navnet, $mailen, $passordet, $typen);
+            $stmtsqlen->store_result();
+            $rnumsqlen = $stmtsqlen->num_rows;
 
-            $resultSqlen = $conn->query($sqlen);
-
-            if($resultSqlen->num_rows == 1) {
-                while($rowSql = $resultSqlen->fetch_assoc()) {
-                    $userInfoUsername = $rowSql["brukerNavn"];
-                    $userInfoEmail = $rowSql["brukerEmail"];
-                    $userInfoPassord = $rowSql["brukerPassord"];
-                    $userInfoBrukerType = $rowSql["brukerType"];
+            if($rnumsqlen == 1) {
+                while($stmtsqlen->fetch()) {
+                    $userInfoUsername = $navnet;
+                    $userInfoEmail = $mailen;
+                    $userInfoPassord = $passordet;
+                    $userInfoBrukerType = $typen;
                 }
                 if($userInfoBrukerType == 3) {
                     if(md5($userInfoUsername) == $cookieEmailen && $userInfoPassord == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
