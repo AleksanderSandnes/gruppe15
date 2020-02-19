@@ -27,16 +27,16 @@
             $cookiePassordet = getCookies("passwordCookie");
 
             if($login_type == 1) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM brukeretabell WHERE brukerEmailHash = ? AND brukerPassord = ?;";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM brukeretabell WHERE concat(brukerEmailHash, saltEmail) = ? AND concat(brukerPassord, salt) = ?;";
             } else if($login_type == 2) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM foreleser WHERE brukerEmailHash = ? AND brukerPassord = ?";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM foreleser WHERE concat(brukerEmailHash, saltEmail) = ? AND concat(brukerPassord, salt) = ?";
             } else if($login_type == 3) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, brukerType FROM admin WHERE brukerEmailHash = ? AND brukerPassord = ?";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM admin WHERE concat(brukerEmailHash, saltEmail) = ? AND concat(brukerPassord, salt) = ?";
             }
             $stmtsqlen = $conn->prepare($sqlen);
             $stmtsqlen->bind_param("ss",$cookieEmailen, $cookiePassordet);
             $stmtsqlen->execute();
-            $stmtsqlen->bind_result($navnet, $mailen, $passordet, $typen);
+            $stmtsqlen->bind_result($navnet, $mailen, $passordet, $salt, $saltEmail, $typen);
             $stmtsqlen->store_result();
             $rnumsqlen = $stmtsqlen->num_rows;
 
@@ -46,15 +46,17 @@
                     $userInfoEmail = $mailen;
                     $userInfoPassord = $passordet;
                     $userInfoBrukerType = $typen;
+                    $saltet = $salt;
+                    $saltetEmail = $saltEmail;
                 }
                 if($userInfoBrukerType == 3) {
-                    if(md5($userInfoUsername) == $cookieEmailen && $userInfoPassord == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
+                    if(md5($userInfoUsername).$saltetEmail == $cookieEmailen && $userInfoPassord.$saltet == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
                         return true;
                     } else {
                         return false;
                     }
                 } else {
-                    if(md5($userInfoEmail) == $cookieEmailen && $userInfoPassord == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
+                    if(md5($userInfoEmail).$saltetEmail == $cookieEmailen && $userInfoPassord.$saltet == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
                         return true;
                     } else {
                         return false;

@@ -16,26 +16,33 @@
       $sql = "";
 
       if($typeBruker == "admin") {
-          $sql = "SELECT idBruker FROM admin WHERE brukerNavn = ? and brukerPassord = ?";
+          $sql = "SELECT idBruker, salt, saltEmail FROM admin WHERE brukerNavn = ? and brukerPassord = ?";
       } else if($typeBruker == "anonym") {
           header("location: welcome$typeBruker.php");
       } else if($typeBruker == "foreleser") {
-          $sql = "SELECT idBruker FROM foreleser WHERE brukerEmail = ? and brukerPassord = ?";
+          $sql = "SELECT idBruker, salt, saltEmail FROM foreleser WHERE brukerEmail = ? and brukerPassord = ?";
       } else if($typeBruker == "brukeretabell") {
-          $sql = "SELECT idBruker FROM brukeretabell WHERE brukerEmail = ? and brukerPassord = ?";
+          $sql = "SELECT idBruker, salt, saltEmail FROM brukeretabell WHERE brukerEmail = ? and brukerPassord = ?";
       }
       $stmtsql = $conn->prepare($sql);
       $stmtsql->bind_param("ss",$myusername,$mypassword);
       $stmtsql->execute();
-      $stmtsql->bind_result($idBrukeren);
+      $stmtsql->bind_result($idBrukeren, $salt, $saltEmail);
       $stmtsql->store_result();
       $rnumm = $stmtsql->num_rows;
+
+      $saltet = "";
+      $saltetEmail = "";
+      while($stmtsql->fetch()) {
+          $saltet = $salt;
+          $saltetEmail = $saltEmail;
+      }
 
       if($rnumm == 1) {
          $_SESSION['login_user'] = $myusername;
          $_SESSION['login_type'] = $typeBruker;
-         setCookies("emailCookie", md5($myusername));
-         setCookies("passwordCookie", $mypassword);
+         setCookies("emailCookie", md5($myusername).$saltetEmail);
+         setCookies("passwordCookie", $mypassword.$saltet);
          header("location: welcome$typeBruker.php");
       } else {
          $error = "Your Login Name or Password is invalid";
