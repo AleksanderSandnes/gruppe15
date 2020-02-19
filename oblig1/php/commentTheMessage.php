@@ -1,17 +1,14 @@
 <?php
-   include('inputValidation.php');
+   include("config.php");
    include("db.php");
 
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-      $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
       // username and password sent from form
-      $meldingID = test_input($_POST['meldingID']);
-      $message = test_input($_POST['message']);
+      $meldingID = mysqli_real_escape_string($db,$_POST['meldingID']);
+      $message = mysqli_real_escape_string($db,$_POST['message']);
 
-      $sql = "UPDATE melding SET kommentar = ? WHERE idMelding = ?";
-      $stmtsql = $conn->prepare($sql);
-      $stmtsql->bind_param("si",$message, $meldingID);
-      $stmtsql->execute();
+      $sql = "UPDATE melding SET kommentar = '$message' WHERE idMelding = $meldingID";
+      $result = mysqli_query($db,$sql);
       echo "Melding kommetert";
    }
 ?>

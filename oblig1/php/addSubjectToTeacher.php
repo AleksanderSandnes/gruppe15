@@ -25,25 +25,19 @@
 
                 $nummer = 0;
 
-
                 if($rnum == 0) {
                     $nummer = rand(1000, 9999);
                 } else {
-                    $SELECTDISTINCT = "SELECT idFag FROM fag WHERE fagNavn = ? GROUP BY idFag";
-                    $stmtSELECTDISTINCT = $conn->prepare($SELECTDISTINCT);
-                    $stmtSELECTDISTINCT->bind_param("s",$fag);
-                    $stmtSELECTDISTINCT->execute();
-                    $stmtSELECTDISTINCT->bind_result($idFaget);
-                    $stmtSELECTDISTINCT->store_result();
-                    while($stmtSELECTDISTINCT->fetch()) {
-                        $nummer = $idFaget;
-                    }
+                    $SELECTDISTINCT = "SELECT DISTINCT * FROM fag WHERE fagNavn = '$fag'";
+                    $result = mysqli_query($conn, $SELECTDISTINCT);
+                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                    $nummer = $row['idFag'];
                 }
 
                 $stmt->close();
-                $SELECTED = "SELECT fagNavn FROM fag WHERE fagNavn = ? AND idFag = ? AND idBruker = ?";
+                $SELECTED = "SELECT fagNavn FROM fag WHERE fagNavn = ? AND idFag = $nummer AND idBruker = $login_id";
                 $stmt = $conn->prepare($SELECTED);
-                $stmt->bind_param("sii",$fag,$nummer,$login_id);
+                $stmt->bind_param("s",$fag);
                 $stmt->execute();
                 $stmt->bind_result($fag);
                 $stmt->store_result();

@@ -13,19 +13,14 @@
       if (mysqli_connect_error()) {
           die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
       } else {
-          $SELECTMeldinger = "SELECT melding FROM melding WHERE idMelding = ?";
-          $stmtSELECTMeldinger = $conn->prepare($SELECTMeldinger);
-          $stmtSELECTMeldinger->bind_param("i",$meldingsId);
-          $stmtSELECTMeldinger->execute();
-          $stmtSELECTMeldinger->bind_result($meldingen);
-          $stmtSELECTMeldinger->store_result();
-          $rnumSELECTMeldinger = $stmtSELECTMeldinger->num_rows;
+          $SELECTMeldinger = "SELECT melding FROM melding WHERE idMelding = $meldingsId";
+          $resultMeldinger = $conn->query($SELECTMeldinger);
           $meldinger = "";
 
-          if ($rnumSELECTMeldinger > 0) {
+          if ($resultMeldinger->num_rows > 0) {
               // output data of each row
-              while($stmtSELECTMeldinger->fetch()) {
-                    $meldinger = $meldingen;
+              while($rowMelding = $resultMeldinger->fetch_assoc()) {
+                    $meldinger = $rowMelding["melding"];
               }
           }
           $conn->close();

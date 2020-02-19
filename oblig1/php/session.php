@@ -1,41 +1,30 @@
 <?php
+   include('config.php');
    include('db.php');
    if(!isset($_SESSION))
    {
        session_start();
    }
-   $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
    $user_check = $_SESSION['login_user'];
    $user_type = $_SESSION['login_type'];
 
-   $ses_sql = "";
-
    if($user_type == "brukeretabell") {
-        $ses_sql = "SELECT idBruker, brukerNavn, brukerType FROM brukeretabell WHERE brukerEmail = ?";
+        $ses_sql = mysqli_query($db,"SELECT idBruker, brukerNavn, brukerEmail, brukerStudie, brukerAar, brukerType FROM $user_type WHERE brukerEmail = '$user_check'");
    } else if($user_type == "foreleser") {
-        $ses_sql = "SELECT idBruker, brukerNavn, brukerType, godkjentAvAdmin FROM foreleser WHERE brukerEmail = ?";
+        $ses_sql = mysqli_query($db,"SELECT idBruker, brukerNavn, brukerEmail, brukerURL, brukerType, godkjentAvAdmin FROM $user_type WHERE brukerEmail = '$user_check'");
    } else if($user_type == "admin") {
-        $ses_sql = "SELECT idBruker, brukerNavn, brukerType FROM admin WHERE brukerNavn = ?";
+        $ses_sql = mysqli_query($db,"SELECT idBruker, brukerNavn, brukerEmail, brukerType FROM $user_type WHERE brukerNavn = '$user_check'");
    }
-   $stmtses_sql = $conn->prepare($ses_sql);
-   $stmtses_sql->bind_param("s", $user_check);
-   $stmtses_sql->execute();
+
+   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
+
+   $login_session = $row['brukerNavn'];
+   $login_type = $row['brukerType'];
+   $login_id = $row['idBruker'];
+
    if($user_type == "foreleser") {
-       $stmtses_sql->bind_result($idBrukeren, $brukerNavnet, $brukerTypen, $godkjentAvAdminen);
-   } else {
-       $stmtses_sql->bind_result($idBrukeren, $brukerNavnet, $brukerTypen);
-   }
-   $stmtses_sql->store_result();
-
-   while($stmtses_sql->fetch()) {
-       $login_session = $brukerNavnet;
-       $login_type = $brukerTypen;
-       $login_id = $idBrukeren;
-
-       if($user_type == "foreleser") {
-            $godkjentAvAdmin = $godkjentAvAdminen;
-       }
+        $godkjentAvAdmin = $row['godkjentAvAdmin'];
    }
 
    if(!isset($_SESSION['login_user'])){

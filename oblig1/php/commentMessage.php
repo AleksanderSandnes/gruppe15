@@ -10,21 +10,14 @@
   if (mysqli_connect_error()) {
       die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
   } else {
-      $SELECTFag = "SELECT idMelding, melding FROM melding WHERE idMelding = ?";
-      $stmt = $conn->prepare($SELECTFag);
-      $stmt->bind_param("i",$meldingID);
-      $stmt->execute();
-      $stmt->bind_result($idMelding, $meldingen);
-      $stmt->store_result();
-      $rnum = $stmt->num_rows;
+      $SELECTFag = "SELECT * FROM melding WHERE idMelding = $meldingID";
+      $resultFag = $conn->query($SELECTFag);
       $fag = "";
 
-
-
-      if ($rnum > 0) {
+      if ($resultFag->num_rows > 0) {
           // output data of each row
-          while($stmt->fetch()) {
-               $fag = $meldingen;
+          while($rowFag = $resultFag->fetch_assoc()) {
+               $fag = $rowFag["melding"];
           }
       } else {
            echo "Feil emnekode gett";

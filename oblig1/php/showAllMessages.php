@@ -10,22 +10,17 @@
    if (mysqli_connect_error()) {
        die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
    } else {
-       $SELECTFag = "SELECT idMelding, melding, svar, status FROM melding WHERE idFag = ?";
-       $stmtSELECTFag = $conn->prepare($SELECTFag);
-       $stmtSELECTFag->bind_param("i",$fagKode);
-       $stmtSELECTFag->execute();
-       $stmtSELECTFag->bind_result($idMelding, $meldingen, $svaret, $statusen);
-       $stmtSELECTFag->store_result();
-       $rnumSELECTFag = $stmtSELECTFag->num_rows;
+       $SELECTFag = "SELECT * FROM melding WHERE idFag = $fagKode";
+       $resultFag = $conn->query($SELECTFag);
        $fag = "";
 
-       if ($rnumSELECTFag > 0) {
+       if ($resultFag->num_rows > 0) {
            // output data of each row
-           while($stmtSELECTFag->fetch()) {
-                if($statusen == 0) {
-                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$idMelding.":</b>".$meldingen."</p><p><b>svar: </b>Ikke noe svar</p><form action='../php/reportMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$idMelding."'><button type='submit' value='submit'>Rapporter</button></form><form action='../php/commentMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$idMelding."'><button type='submit' value='submit'>Kommenter</button></form></div>";
+           while($rowFag = $resultFag->fetch_assoc()) {
+                if($rowFag["status"] == 0) {
+                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$rowFag["idMelding"].":</b>".$rowFag["melding"]."</p><p><b>svar: </b>Ikke noe svar</p><form action='../php/reportMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Rapporter</button></form><form action='../php/commentMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Kommenter</button></form></div>";
                 } else {
-                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$idMelding.":</b>".$meldingen."</p><p><b>svar: </b>".$svaret."</p><form action='../php/reportMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$idMelding."'><button type='submit' value='submit'>Rapporter</button></form><form action='../php/commentMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$idMelding."'><button type='submit' value='submit'>Kommenter</button></form></div>";
+                    $fag .= "<div style='border: 1px solid black; padding: 10px'><p><b>Spørsmål ".$rowFag["idMelding"].":</b>".$rowFag["melding"]."</p><p><b>svar: </b>".$rowFag["svar"]."</p><form action='../php/reportMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Rapporter</button></form><form action='../php/commentMessage.php' method='POST'><input type='text' style='display:none' name='meldingID' value='".$rowFag["idMelding"]."'><button type='submit' value='submit'>Kommenter</button></form></div>";
                 }
            }
        } else {

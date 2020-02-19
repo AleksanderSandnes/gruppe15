@@ -9,51 +9,38 @@
        if (mysqli_connect_error()) {
            die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
        } else {
-
            $SELECTMeldinger = "SELECT brukere.melding.melding, brukere.melding.idMelding, brukere.melding.status
                                 FROM brukere.melding
                                 INNER JOIN brukere.fag
                                     ON brukere.melding.idFag = brukere.fag.idFag
                                 INNER JOIN brukere.foreleser
                                     ON brukere.fag.idBruker = brukere.foreleser.idBruker
-                                WHERE brukere.foreleser.idBruker = ?;";
-           $stmtSELECTMeldinger = $conn->prepare($SELECTMeldinger);
-           $stmtSELECTMeldinger->bind_param("i",$login_id);
-           $stmtSELECTMeldinger->execute();
-           $stmtSELECTMeldinger->bind_result($meldingen, $idMelding, $status);
-           $stmtSELECTMeldinger->store_result();
-           $rnumSELECTMeldinger = $stmtSELECTMeldinger->num_rows;
+                                WHERE brukere.foreleser.idBruker = $login_id;";
+           $SELECTMeldingerr = "SELECT * FROM melding WHERE idBrukerTil = $login_id";
+           $SELECTFag = "SELECT DISTINCT * FROM fag WHERE idBruker = $login_id";
+           $resultMeldinger = $conn->query($SELECTMeldinger);
+           $resultFag = $conn->query($SELECTFag);
            $meldinger = "";
+           $fag = "";
 
-           if ($rnumSELECTMeldinger > 0) {
+           if ($resultMeldinger->num_rows > 0) {
                // output data of each row
-               while($stmtSELECTMeldinger->fetch()) {
-                   if($status == 0) {
+               while($rowMelding = $resultMeldinger->fetch_assoc()) {
+                   if($rowMelding["status"] == 0) {
                        $meldinger .=
                        "<form style='border: 1px solid black; padding: 10px' action='../php/answerMessage.php' method='POST'>".
                             "<p>Fra anonym</p>".
-                            "<input style='display:none' name='meldingsId' type='text' value='".$idMelding."'>".
-                            "<p>".$meldingen."</p>".
+                            "<input style='display:none' name='meldingsId' type='text' value='".$rowMelding["idMelding"]."'>".
+                            "<p>".$rowMelding["melding"]."</p>".
                             "<button type='submit' value='submit'>Svar</button>".
                        "</form>";
                    }
                }
            }
-
-
-           $SELECTFag = "SELECT DISTINCT idFag, fagNavn FROM fag WHERE idBruker = ?";
-           $stmtSELECTFag = $conn->prepare($SELECTFag);
-           $stmtSELECTFag->bind_param("i",$login_id);
-           $stmtSELECTFag->execute();
-           $stmtSELECTFag->bind_result($idFag, $fagNavn);
-           $stmtSELECTFag->store_result();
-           $rnumSELECTFag = $stmtSELECTFag->num_rows;
-           $fag = "";
-
-           if ($rnumSELECTFag > 0) {
+           if ($resultFag->num_rows > 0) {
                // output data of each row
-               while($stmtSELECTFag->fetch()) {
-                   $fag .= "<li>".$idFag.": ".$fagNavn."</li>";
+               while($rowFag = $resultFag->fetch_assoc()) {
+                   $fag .= "<li>".$rowFag["idFag"].": ".$rowFag["fagNavn"]."</li>";
                }
            }
            $conn->close();
