@@ -6,7 +6,7 @@
        define('DB_USERNAME', 'root');
    }
    if (!defined('DB_PASSWORD')) {
-       define('DB_PASSWORD', '');
+       define('DB_PASSWORD', 'Gruppe15...123');
    }
    if (!defined('DB_NAME')) {
        define('DB_NAME', 'brukere');
