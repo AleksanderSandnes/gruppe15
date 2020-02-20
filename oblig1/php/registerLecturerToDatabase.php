@@ -29,7 +29,7 @@
                 $saltPass = "";
                 $saltEmail = "";
 
-                for($i = 0; $i<11;$i++) {
+                for($i = 0; $i<rand(5,11);$i++) {
                     $tallEllerBokstav = rand(1,2);
                     if($tallEllerBokstav == 1) {
                         $tilfeldigBokstav = rand(0,25);
@@ -39,7 +39,7 @@
                         $saltPass .= $numbers[$tilfeldigBokstav];
                     }
                 }
-                for($i = 0; $i<11;$i++) {
+                for($i = 0; $i<rand(5,11);$i++) {
                     $tallEllerBokstav = rand(1,2);
                     if($tallEllerBokstav == 1) {
                         $tilfeldigBokstav = rand(0,25);
@@ -53,29 +53,37 @@
                 $stmt = $conn->prepare($INSERT);
                 $emailHash = md5($email);
                 $stmt->bind_param("sssssss", $navn, $email, $emailHash, $passord, $saltPass, $saltEmail, $_FILES['registerBilde']['name']);
-                $stmt->execute();
 
                 //bilde
                 //BURDE BRUKE REGEX
                 if (($_FILES['registerBilde']['name']!="")){
-                // Where the file is going to be stored
-                     $target_dir = "../images/";
-                     $file = $_FILES['registerBilde']['name'];
-                     $path = pathinfo($file);
-                     $filename = $path['filename'];
-                     $ext = $path['extension'];
-                     $temp_name = $_FILES['registerBilde']['tmp_name'];
-                     $path_filename_ext = $target_dir.$filename.".".$ext;
+                    // Where the file is going to be stored
+                    $target_dir = "../images/";
+                    $file = $_FILES['registerBilde']['name'];
+                    $path = pathinfo($file);
+                    $filename = $path['filename'];
+                    $ext = $path['extension'];
+                    $temp_name = $_FILES['registerBilde']['tmp_name'];
+                    $path_filename_ext = $target_dir.$filename.".".$ext;
 
-                     // Check if file already exists
-                     if (file_exists($path_filename_ext)) {
-                          echo "Sorry, file already exists.<br>";
-                     } else {
-                         move_uploaded_file($temp_name,$path_filename_ext);
-                         echo "Congratulations! File Uploaded Successfully.<br>";
-                     }
+                    preg_match('/^[a-z0-9_-]+.jpg$/', $file, $match,PREG_OFFSET_CAPTURE);
+
+                    if($match) {
+                        // Check if file already exists
+                        if (file_exists($path_filename_ext)) {
+                             echo "Sorry, file already exists.<br>";
+                        } else {
+                            move_uploaded_file($temp_name,$path_filename_ext);
+                            echo "Congratulations! File Uploaded Successfully.<br>";
+                            echo "Bruker lagt til";
+                            $stmt->execute();
+                        }
+                    } else {
+                        echo "<h1>Hacketty hack hack</h1>";
+                        echo "<img style='width:50%' src='../images/tumpTan.jpg'>";
+                        echo "<br>*Psst* Brukeren ble ikke lagt til";
+                    }
                 }
-                echo "Bruker lagt til";
             } else {
                 echo "Bruker allerede registrert";
             }
