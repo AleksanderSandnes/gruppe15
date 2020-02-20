@@ -14,7 +14,7 @@
             die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
         } else {
             $SELECT = "SELECT brukerEmail FROM foreleser WHERE brukerEmail = ? LIMIT 1";
-            $INSERT = "INSERT INTO foreleser (brukerNavn, brukerEmail, brukerEmailHash, brukerPassord, salt, saltEmail, brukerURL, brukerType, godkjentAvAdmin) VALUES (?, ?, ?, ?, ?, ?, ?, 2,0)";
+            $INSERT = "INSERT INTO foreleser(brukerNavn, brukerEmail, brukerEmailHash, brukerPassord, salt, saltEmail, brukerURL, brukerType, godkjentAvAdmin) VALUES (?, ?, ?, ?, ?, ?, ?, 2,0)";
 
             $stmt = $conn->prepare($SELECT);
             $stmt->bind_param("s",$email);
@@ -52,8 +52,9 @@
                 $stmt->close();
                 $stmt = $conn->prepare($INSERT);
                 $emailHash = md5($email);
-                $stmt->bind_param("sssssss", $navn, $email, $emailHash, $passord, $salt, $saltEmail, $_FILES['registerBilde']['name']);
+                $stmt->bind_param("sssssss", $navn, $email, $emailHash, $passord, $saltPass, $saltEmail, $_FILES['registerBilde']['name']);
                 $stmt->execute();
+
                 //bilde
                 //BURDE BRUKE REGEX
                 if (($_FILES['registerBilde']['name']!="")){
