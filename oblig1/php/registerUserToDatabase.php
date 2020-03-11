@@ -4,7 +4,7 @@
     include('inputValidation.php');
 
     $userName = test_input($_POST['registerName']);
-    $userPassword = test_input($_POST['registerPassword']);
+    $userPassword = test_input(md5($_POST['registerPassword']));
     $userEmail = test_input($_POST['registerEmail']);
     $userStudie = test_input($_POST['registerStudie']);
     $userYear = test_input($_POST['registerYear']);
@@ -15,7 +15,7 @@
             die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
         } else {
             $SELECT = "SELECT brukerEmail FROM brukeretabell WHERE brukerEmail = ? LIMIT 1";
-            $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, brukerEmail, brukerStudie, brukerAar, brukerType) VALUES (?, ?, ?, ?, ?, 1)";
+            $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, salt, brukerEmail, brukerEmailHash, saltEmail, brukerStudie, brukerAar, brukerType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
 
             $stmt = $conn->prepare($SELECT);
             $stmt->bind_param("s",$userEmail);
@@ -25,9 +25,35 @@
             $rnum = $stmt->num_rows;
 
             if ($rnum == 0) {
+                $alphas = range('a', 'z');
+                $numbers = range(1, 9);
+                $salt = "";
+                $saltEmail = "";
+
+                for($i = 0; $i<rand(5,11);$i++) {
+                    $tallEllerBokstav = rand(1,2);
+                    if($tallEllerBokstav == 1) {
+                        $tilfeldigBokstav = rand(0,25);
+                        $salt .= $alphas[$tilfeldigBokstav];
+                    } else if($tallEllerBokstav == 2) {
+                        $tilfeldigBokstav = rand(0,8);
+                        $salt .= $numbers[$tilfeldigBokstav];
+                    }
+                }
+                for($i = 0; $i<rand(5,11);$i++) {
+                    $tallEllerBokstav = rand(1,2);
+                    if($tallEllerBokstav == 1) {
+                        $tilfeldigBokstav = rand(0,25);
+                        $saltEmail .= $alphas[$tilfeldigBokstav];
+                    } else if($tallEllerBokstav == 2) {
+                        $tilfeldigBokstav = rand(0,8);
+                        $saltEmail .= $numbers[$tilfeldigBokstav];
+                    }
+                }
                 $stmt->close();
                 $stmt = $conn->prepare($INSERT);
-                $stmt->bind_param("ssssi", $userName, $userPassword, $userEmail, $userStudie, $userYear);
+                $emailHash = md5($userEmail);
+                $stmt->bind_param("sssssssi", $userName, $userPassword, $salt, $userEmail, $emailHash, $saltEmail, $userStudie, $userYear);
                 $stmt->execute();
                 echo "Bruker lagt til";
             } else {
