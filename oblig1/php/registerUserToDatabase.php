@@ -9,11 +9,21 @@
     $userStudie = test_input($_POST['registerStudie']);
     $userYear = test_input($_POST['registerYear']);
 
-    if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear)) {
+    $password = $_POST['registerPassword'];
+
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
+    if (!empty($userName) || !empty($userPassword) || !empty($userEmail) || !empty($userStudie) || !empty($userYear) || !$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
+
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
         if (mysqli_connect_error()) {
             die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
-        } else {
+        }
+        else {
             $SELECT = "SELECT brukerEmail FROM brukeretabell WHERE brukerEmail = ? LIMIT 1";
             $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, salt, brukerEmail, brukerEmailHash, saltEmail, brukerStudie, brukerAar, brukerType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
 

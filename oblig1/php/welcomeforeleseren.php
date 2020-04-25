@@ -74,7 +74,7 @@
       <h1>Welcome <?php echo $login_session; ?></h1>
       <form action='../php/addSubjectToTeacher.php' method='POST'>
          <label for='fagManUnderviser'>Velg fag du underviser:</label>
-         <input type='text' id='fagManUnderviser' name='fagManUnderviser'>
+         <input type='text' id='fagManUnderviser' name='fagManUnderviser' spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
          <button type='submit' value='Submit'>Legg til</button>
       </form>
       <div>
