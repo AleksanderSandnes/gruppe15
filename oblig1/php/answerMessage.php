@@ -41,7 +41,7 @@
     <p><?php echo $meldinger; ?></p>
     <form action='../php/answerMessageFromStudent.php' method='POST'>
         <p><b>Svar på meldingen:</b></p>
-        <input style='display:none' name='meldingsId' type='text' value='<?php echo $meldingsId; ?>'>
+        <input style='display:none' name='meldingsId' type='text' value='<?php echo $meldingsId; ?>' spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
         <textarea rows='4' cols='50' name='answer'> </textarea>
     <button type='submit' value='Submit'>Svar på melding</button>
   </form>

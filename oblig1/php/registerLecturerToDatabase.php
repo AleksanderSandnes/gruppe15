@@ -7,7 +7,15 @@
     $email = test_input($_POST['registerEmail']);
     $passord = test_input(md5($_POST['registerPassword']));
 
-    if (!empty($navn) || !empty($email) || !empty($passord)) {
+    $password = $_POST['registerPassword'];
+
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
+    if (!empty($navn) || !empty($email) || !empty($passord) || !$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
         if (mysqli_connect_error()) {

@@ -33,7 +33,7 @@
     <form action='../php/commentTheMessage.php' method='POST'>
         <p>Kommenter meldingen:</p>
         <p><?php echo $fag; ?></p>
-        <input style='display:none;' type='text' name='meldingID' value='<?php echo $meldingID; ?>'>
+        <input style='display:none;' type='text' name='meldingID' value='<?php echo $meldingID; ?>' spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
         <textarea rows='4' cols='50' name='message'> </textarea>
         <button type='submit' value='Submit'>Kommenter melding</button>
     </form>

@@ -44,9 +44,31 @@
       delCookies("passwordCookie");
       header("Location: ../html/index.html");
   }
+
+  if(isset($_GET['byttPassord'])) {
+      $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
+
+      $email = $_GET['email'];
+      $gammeltPassord = $_GET['gammeltPassord'];
+      $nyttPassord1 = $_GET['nyttPassord1'];
+      $nyttPassord2 = $_GET['nyttPassord2'];
+
+      $hentBruker = " SELECT brukerPassord FROM brukeretabell WHERE brukerPassord = '$gammeltPassord' AND brukerEmail = '$email'";
+
+      if(mysqli_query($conn, $hentBruker)) {
+          echo "Bruker fungerer";
+
+          $oppdaterPassord = "UPDATE brukeretabell SET brukerPassord = '$nyttPassord1' WHERE brukerEmail = '$email'";
+
+          mysqli_query($conn, $oppdaterPassord);
+      }
+
+      else {
+          echo "Error: Noe gikk galt... " . mysqli_error($conn);
+      }
+  }
 ?>
 <html>
-
    <head>
       <title>Welcome </title>
     <script type='text/javascript' src='../js/bilder.js'></script>
@@ -54,15 +76,45 @@
    <body>
       <h2><a href = "logout.php">Sign Out</a></h2>
       <h1>Welcome <?php echo $login_session; ?></h1>
+
       <form action='../php/sendMessageToTeacher.php' method='POST'>
-        <p>Send melding til foreleser:</p>
-        <select name='teacher' id='velg'><?php echo $fag; ?></select>
-        <textarea rows='4' cols='50' name='message'> </textarea>
-        <button type='submit' value='Submit'>Send melding</button>
+          <p>Send melding til foreleser:</p>
+          <select name='teacher' id='velg'><?php echo $fag; ?></select><br>
+          <textarea rows='4' cols='50' name='message'> </textarea><br>
+          <button type='submit' value='Submit'>Send melding</button>
       </form>
+
       <div>
-        <?php echo $bilder; ?>
+          <?php echo $bilder; ?>
       </div>
+
+      <br><br>
+
+      <p>Bytt Passord:</p>
+      <form action="">
+          <label>Skriv inn email</label>
+          <input type="email" name="email" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><br>
+
+          <br>
+
+          <label>Skriv inn gammelt passord</label>
+          <input type="password" name="gammeltPassord" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><br>
+
+          <br>
+
+          <label>Skriv inn nytt passord</label>
+          <input type="password" name="nyttPassord1" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"> <br>
+
+          <br>
+
+          <label>Skriv inn nytt passord igjen</label>
+          <input type="password" name="nyttPassord2" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+
+          <button name="byttPassord">Send inn</button>
+
+      </form>
+
+
    </body>
 
 </html>

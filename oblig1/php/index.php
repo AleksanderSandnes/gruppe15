@@ -1,16 +1,21 @@
-<!DOCTYPE html>
+<?php
+    include("cookiemonster.php");
+    if(checkCookies(1)) {
+        echo "lol";
+    }
+?><!DOCTYPE html>
 <html lang="nb" dir="ltr">
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../css/index.css">
     <title>Oblig 1 | Gruppe 15</title>
     <script type="text/javascript" src="../js/index.js"></script>
-    <script src="../js/knapp.js" type="text/javascript"></script>
   </head>
   <body>
+    <p style="width: 100%; background-color:black; margin: 0; padding: 10px; color: white; text-align: center; position: fixed; top: 0;"><b>PS: </b>Ikke bruk et "vanlig" passord. Vi brukte med tid på design en sikkerhet, og det sier kanskje litt.</p>
     <main>
       <section>
-        <form action="../php/loginFromDatabase.php" id="loginForm" method="POST">
+        <form action="loginFromDatabase.php" id="loginForm" method="POST">
           <h2>Logg inn bruker</h2>
           <label id="loginType" for="loginName">Email</label>
           <input id="loginName" type="text" name="loginUserName" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
@@ -26,7 +31,7 @@
           <button type="submit" value="Submit" id="loginBtn">Logg inn</button>
         </form>
 
-        <form action="../php/userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
+        <form action="userForgotPasswordFromDatabase.php" id="forgotPasswordForm" method="POST">
           <h2>Bruker glemt passord</h2>
           <label for="forgotPasswordEmail">Epost</label>
           <input id="forgotPasswordEmail" type="text" name="forgotPasswordEmail" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
@@ -51,7 +56,7 @@
         </select>
 
         <article id="studentRegister">
-          <form action="../php/registerUserToDatabase.php" method="POST">
+          <form action="registerUserToDatabase.php" method="POST">
             <h2>Registrer ny bruker</h2>
             <label for="registerName">Navn</label>
             <input id="registerName" type="text" name="registerName" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
@@ -68,7 +73,7 @@
         </article>
 
         <article id="teacherRegister">
-          <form name="registration" action="../php/registerLecturerToDatabase.php" method="post" enctype="multipart/form-data">
+          <form name="registration" action="registerLecturerToDatabase.php" method="post" enctype="multipart/form-data">
             <h2>Registrer ny foreleser</h2>
             <label for="navn">Navn</label>
             <input type="text" name="registerName" id="navn" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
@@ -82,10 +87,6 @@
           </form>
         </article>
       </section>
-
-      <button class="button"><span><a href="http://158.39.188.215/dokumentasjon/doku.docx">Dokumentasjon </a></span></button>
-
-      <button class="button2"><span><a href="http://158.39.188.215/app/v2.jks">App</a></span></button>
     </main>
   </body>
 </html>

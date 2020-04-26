@@ -9,7 +9,7 @@
       <h2><a href = "logout.php">Sign Out</a></h2>
       <form action='../php/showAllMessages.php' method='POST'>
          <label for='fagManVilSe'>Skriv koden til faget du vil se meldinger for:</label>
-         <input type='text' id='fagManVilSe' name='fagManVilSe'>
+         <input type='text' id='fagManVilSe' name='fagManVilSe' spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
          <button type='submit' value='Submit'>Se meldinger</button>
       </form>
    </body>

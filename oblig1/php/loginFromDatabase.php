@@ -48,5 +48,7 @@
          $error = "Your Login Name or Password is invalid";
          exit("<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>");
       }
+
+      
    }
 ?>
