@@ -74,7 +74,7 @@
                     $temp_name = $_FILES['registerBilde']['tmp_name'];
                     $path_filename_ext = $target_dir.$filename.".".$ext;
 
-                    preg_match('/^[a-z0-9_-]+.jpg$/', $file, $match,PREG_OFFSET_CAPTURE);
+                    preg_match('/^[a-zA-Z0-9_-]+.jpg$/', $file, $match,PREG_OFFSET_CAPTURE);
 
                     if($match) {
                         // Check if file already exists

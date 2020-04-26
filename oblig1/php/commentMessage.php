@@ -19,8 +19,6 @@
       $rnum = $stmt->num_rows;
       $fag = "";
 
-
-
       if ($rnum > 0) {
           // output data of each row
           while($stmt->fetch()) {
