@@ -42,7 +42,7 @@
       <title>Welcome </title>
    </head>
    <body>
-      <h2><a href = "logout.php">Sign Out</a></h2>
+      <h2><a href = "logout.php" target="_top">Sign Out</a></h2>
       <h1>Welcome <?php echo $login_session; ?></h1>
       <div style='display:flex;'>
         <?php echo $fag; ?>

@@ -10,9 +10,9 @@
    </head>
    <body>
        <ul>
-           <li><a class="active" href="welcomeanonym.php">Gjestesiden</a></li>
-           <li><a href="../html/index.html">HJEM</a></li>
-           <li><a href="logout.php">Logg ut</a> </li>
+           <li><a class="active" href="welcomeanonym.php" target="_top">Gjestesiden</a></li>
+           <li><a href="../html/index.html" target="_top">HJEM</a></li>
+           <li><a href="logout.php" target="_top">Logg ut</a> </li>
        </ul>
 
       <form action='../php/showAllMessages.php' method='POST'>
