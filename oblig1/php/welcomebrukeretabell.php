@@ -87,34 +87,5 @@
       <div>
           <?php echo $bilder; ?>
       </div>
-
-      <br><br>
-
-      <p>Bytt Passord:</p>
-      <form action="">
-          <label>Skriv inn email</label>
-          <input type="email" name="email" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><br>
-
-          <br>
-
-          <label>Skriv inn gammelt passord</label>
-          <input type="password" name="gammeltPassord" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><br>
-
-          <br>
-
-          <label>Skriv inn nytt passord</label>
-          <input type="password" name="nyttPassord1" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"> <br>
-
-          <br>
-
-          <label>Skriv inn nytt passord igjen</label>
-          <input type="password" name="nyttPassord2" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
-
-          <button name="byttPassord">Send inn</button>
-
-      </form>
-
-
    </body>
-
 </html>
