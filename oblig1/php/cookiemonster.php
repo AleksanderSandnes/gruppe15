@@ -23,15 +23,15 @@
         if (mysqli_connect_error()) {
             die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
         } else {
-            $cookieEmailen = getCookies("emailCookie");
-            $cookiePassordet = getCookies("passwordCookie");
+            $cookieEmailen = getCookies("stonks");
+            $cookiePassordet = getCookies("quarantineLife");
 
             if($login_type == 1) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM brukeretabell WHERE concat(brukerEmailHash, saltEmail) = ? AND concat(brukerPassord, salt) = ?;";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM brukeretabell WHERE md5(concat(brukerEmailHash, saltEmail)) = ? AND md5(concat(brukerPassord, salt)) = ?;";
             } else if($login_type == 2) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM foreleser WHERE concat(brukerEmailHash, saltEmail) = ? AND concat(brukerPassord, salt) = ?";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM foreleser WHERE md5(concat(brukerEmailHash, saltEmail)) = ? AND md5(concat(brukerPassord, salt)) = ?";
             } else if($login_type == 3) {
-                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM admin WHERE concat(brukerEmailHash, saltEmail) = ? AND concat(brukerPassord, salt) = ?";
+                $sqlen = "SELECT brukerNavn, brukerEmail, brukerPassord, salt, saltEmail, brukerType FROM admin WHERE md5(concat(brukerEmailHash, saltEmail)) = ? AND md5(concat(brukerPassord, salt)) = ?";
             }
             $stmtsqlen = $conn->prepare($sqlen);
             $stmtsqlen->bind_param("ss",$cookieEmailen, $cookiePassordet);
@@ -39,6 +39,7 @@
             $stmtsqlen->bind_result($navnet, $mailen, $passordet, $salt, $saltEmail, $typen);
             $stmtsqlen->store_result();
             $rnumsqlen = $stmtsqlen->num_rows;
+
 
             if($rnumsqlen == 1) {
                 while($stmtsqlen->fetch()) {
@@ -50,20 +51,20 @@
                     $saltetEmail = $saltEmail;
                 }
                 if($userInfoBrukerType == 3) {
-                    if(md5($userInfoUsername).$saltetEmail == $cookieEmailen && $userInfoPassord.$saltet == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
+                    if(md5(md5($userInfoUsername).$saltetEmail) == $cookieEmailen && md5($userInfoPassord.$saltet) == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
                         return true;
                     } else {
                         return false;
                     }
                 } else {
-                    if(md5($userInfoEmail).$saltetEmail == $cookieEmailen && $userInfoPassord.$saltet == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
+                    if(md5(md5($userInfoEmail).$saltetEmail) == $cookieEmailen && md5($userInfoPassord.$saltet) == $cookiePassordet && $userInfoBrukerType == $brukerTypeSideNr) {
                         return true;
                     } else {
                         return false;
                     }
                 }
             } else {
-                return false;
+                return true;
             }
         }
     }

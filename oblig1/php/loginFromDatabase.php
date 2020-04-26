@@ -41,8 +41,8 @@
       if($rnumm == 1) {
          $_SESSION['login_user'] = $myusername;
          $_SESSION['login_type'] = $typeBruker;
-         setCookies("emailCookie", md5($myusername).$saltetEmail);
-         setCookies("passwordCookie", $mypassword.$saltet);
+         setCookies("stonks", md5(md5($myusername).$saltetEmail));
+         setCookies("quarantineLife", md5($mypassword.$saltet));
          header("location: welcome$typeBruker.php");
       } else {
          $error = "Your Login Name or Password is invalid";
