@@ -40,7 +40,7 @@
                 $salt = "";
                 $saltEmail = "";
 
-                for($i = 0; $i<rand(5,11);$i++) {
+                for($i = 0; $i<rand(10,20);$i++) {
                     $tallEllerBokstav = rand(1,2);
                     if($tallEllerBokstav == 1) {
                         $tilfeldigBokstav = rand(0,25);
@@ -50,7 +50,7 @@
                         $salt .= $numbers[$tilfeldigBokstav];
                     }
                 }
-                for($i = 0; $i<rand(5,11);$i++) {
+                for($i = 0; $i<rand(10,20);$i++) {
                     $tallEllerBokstav = rand(1,2);
                     if($tallEllerBokstav == 1) {
                         $tilfeldigBokstav = rand(0,25);
