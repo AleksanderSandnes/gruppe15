@@ -1,6 +1,6 @@
 <?php
     function setCookies($cookieName, $cookie) {
-        setrawcookie($cookieName, $cookie, time() + (10 * 365 * 24 * 60 * 60));
+        setrawcookie($cookieName, $cookie, time() + (24 * 60 * 60), "", "localhost"); // Cookien varer 1 dag
     }
 
     function getCookies($cookieName) {
