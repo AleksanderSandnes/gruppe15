@@ -39,7 +39,7 @@
       <title>Welcome</title>
    </head>
    <body>
-      <h2><a href = "logout.php">Sign Out</a></h2>
+      <h2><a href = "logout.php" target="_top">Sign Out</a></h2>
       <p>EMNEKODE: <?php echo $fagKode; ?></p>
       <div style='display:flex;'>
         <?php echo $fag; ?>

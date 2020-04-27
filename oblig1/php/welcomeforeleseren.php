@@ -70,7 +70,7 @@
       <title>Welcome </title>
    </head>
    <body id='body'>
-      <h2><a href = "logout.php">Sign Out</a></h2>
+      <h2><a href = "logout.php" target="_top">Sign Out</a></h2>
       <h1>Welcome <?php echo $login_session; ?></h1>
       <form action='../php/addSubjectToTeacher.php' method='POST'>
          <label for='fagManUnderviser'>Velg fag du underviser:</label>

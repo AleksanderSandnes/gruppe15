@@ -74,7 +74,7 @@
     <script type='text/javascript' src='../js/bilder.js'></script>
    </head>
    <body>
-      <h2><a href = "logout.php">Sign Out</a></h2>
+      <h2><a href = "logout.php" target="_top">Sign Out</a></h2>
       <h1>Welcome <?php echo $login_session; ?></h1>
 
       <form action='../php/sendMessageToTeacher.php' method='POST'>
@@ -87,34 +87,5 @@
       <div>
           <?php echo $bilder; ?>
       </div>
-
-      <br><br>
-
-      <p>Bytt Passord:</p>
-      <form action="">
-          <label>Skriv inn email</label>
-          <input type="email" name="email" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><br>
-
-          <br>
-
-          <label>Skriv inn gammelt passord</label>
-          <input type="password" name="gammeltPassord" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"><br>
-
-          <br>
-
-          <label>Skriv inn nytt passord</label>
-          <input type="password" name="nyttPassord1" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"> <br>
-
-          <br>
-
-          <label>Skriv inn nytt passord igjen</label>
-          <input type="password" name="nyttPassord2" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
-
-          <button name="byttPassord">Send inn</button>
-
-      </form>
-
-
    </body>
-
 </html>

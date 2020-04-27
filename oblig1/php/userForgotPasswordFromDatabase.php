@@ -25,5 +25,5 @@
       $stmtsql->execute();
    }
 ?><html">
-      <h2><a href = "logout.php">Gå tilbake til login</a></h2>
+      <h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>
 </html>
