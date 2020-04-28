@@ -1,7 +1,28 @@
 <?php
+    // Composer autoloader
+    require __DIR__ . '../vendor/autoload.php';
+
     include("config.php");
     include("db.php");
     include('inputValidation.php');
+
+    // Shortcuts for simpler usage
+    use Monolog\Logger;
+    use Monolog\Formatter\LineFormatter;
+    use Monolog\Handler\StreamHandler;
+
+    // Common Logger
+    $Log = new Logger('log-files');
+
+    // Line formatter without empty brackets in the end
+    $formatter = new LineFormatter(null, null, false, true);
+
+    // Informational level handler
+    $informationHandler = new StreamHandler('../logs/error.log', Logger::INFO);
+    $informationHandler->setFormatter($formatter);
+
+    //This will have only INFORMATIONAL messages
+    $Log->pushHandler($informationHandler);
 
     $navn = test_input($_POST['registerName']);
     $email = test_input($_POST['registerEmail']);
@@ -79,26 +100,42 @@
                     if($match) {
                         // Check if file already exists
                         if (file_exists($path_filename_ext)) {
+                            // Sender en log om at noen prøvde å legge til en fil som allerede finnes
+                            $Log->info("En bruker prøvde å laste opp et bilde som allerede finnes");
+
                              echo "Sorry, file already exists.<br>";
                         } else {
                             move_uploaded_file($temp_name,$path_filename_ext);
                             echo "Congratulations! File Uploaded Successfully.<br>";
                             echo "Bruker lagt til";
+
+                            // Sender en log om at bruker ble opprettet.
+                            $Log->info("En bruker ble opprettet.", ['brukernavn'=>$navn]);
+
                             $stmt->execute();
                         }
                     } else {
                         echo "<h1>Hacketty hack hack</h1>";
                         echo "<img style='width:50%' src='../images/tumpTan.jpg'>";
                         echo "<br>*Psst* Brukeren ble ikke lagt til";
+
+                        // Sender inn en log
+                        $Log->info('Noen prøvde å opprette en bruker men klarte det ikke');
                     }
                 }
             } else {
+                // Logger feilet forsøk
+                $Log->info('Noen prøvde å opprette en bruker som allerede finnes');
+
                 echo "Bruker allerede registrert";
             }
             $stmt->close();
             $conn->close();
         }
     } else {
+        // Logger at noen ikke fyllte ut alle feltene
+        $Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
+
         echo "Du må fylle ut alle feltene";
         die();
     }

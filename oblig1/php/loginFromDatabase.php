@@ -1,4 +1,32 @@
 <?php
+    // Composer autoloader
+    require __DIR__ . '../vendor/autoload.php';
+
+    // Shortcuts for simpler usage
+    use Monolog\Logger;
+    use Monolog\Formatter\LineFormatter;
+    use Monolog\Handler\StreamHandler;
+
+    // Common Logger
+    $Log = new Logger('log-files');
+
+    // Line formatter without empty brackets in the end
+    $formatter = new LineFormatter(null, null, false, true);
+
+    // Notice level handler
+    $noticeHandler = new StreamHandler('../logs/notice.log', Logger::NOTICE);
+    $noticeHandler->setFormatter($formatter);
+
+    // Informational level handler
+    $informationalHandler = new StreamHandler('../logs/informational.log', Logger::INFO);
+    $informationalHandler->setFormatter($formatter);
+
+    // This will have only NOTICE messages
+    $Log->pushHandler($noticeHandler);
+
+    // This will have only INFORMATIONAL messages
+    $Log->pushHandler($informationalHandler);
+
    include("cookiemonster.php");
    include("db.php");
    include('inputValidation.php');
@@ -44,11 +72,17 @@
            $_SESSION['login_user'] = $myusername;
            $_SESSION['login_type'] = $typeBruker;
            if ($attempt < 4) {
+               // Logger riktig innlogging
+               $Log->info('Bruker logget inn', ['brukernavn'=>$myusername]);
+
                setCookies("emailCookie", md5($myusername) . $saltetEmail);
                setCookies("passwordCookie", $mypassword . $saltet);
                time_nanosleep(0, 10000000000 * (log($attempt)^10));
                header("location: welcome$typeBruker.php");
            } else {
+               // Logger feil innlogging creds
+               $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
+
                $attempt++;
                $error = "Your Login Name or Password is invalid. The number of attempts is now '.$attempt.'";
                exit("<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>");

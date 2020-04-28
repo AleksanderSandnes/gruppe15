@@ -1,7 +1,7 @@
 <?php
    include('cookiemonster.php');
 
-   if(checkCookies(2)) {
+if(checkCookies(2)) {
        include('session.php');
        include('db.php');
        include('inputValidation.php');
