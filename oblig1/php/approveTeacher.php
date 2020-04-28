@@ -1,27 +1,7 @@
 <?php
-    // Composer autoloader
-    require __DIR__ . '../vendor/autoload.php';
-
-    // Shortcuts for simpler usage
-    use Monolog\Logger;
-    use Monolog\Formatter\LineFormatter;
-    use Monolog\Handler\StreamHandler;
-
-    // Common Logger
-    $Log = new Logger('log-files');
-
-    // Line formatter without empty brackets in the end
-    $formatter = new LineFormatter(null, null, false, true);
-
-    // Information level handler
-    $informationHandler = new StreamHandler('../logs/information.log', Logger::INFO);
-    $informationHandler->setFormatter($formatter);
-
-    // This will INFORMATION messages
-    $Log->pushHandler($informationHandler);
-
    include('inputValidation.php');
    include('cookiemonster.php');
+   include('logger.php');
 
    if(checkCookies(3)) {
        include("db.php");

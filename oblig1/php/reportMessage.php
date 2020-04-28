@@ -1,25 +1,5 @@
 <?php
-    // Composer autoloader
-    require __DIR__ . '../vendor/autoload.php';
-
-    // Shortcuts for simpler usage
-    use Monolog\Logger;
-    use Monolog\Formatter\LineFormatter;
-    use Monolog\Handler\StreamHandler;
-
-    // Common Logger
-    $Log = new Logger('log-files');
-
-    // Line formatter without empty brackets in the end
-    $formatter = new LineFormatter(null, null, false, true);
-
-    // Informational level handler
-    $informationalHandler = new StreamHandler('../logs/informational.log', Logger::INFO);
-    $informationalHandler->setFormatter($formatter);
-
-    // This will have INFORMATIONAL messages only
-    $Log->pushHandler($informationalHandler);
-
+   include('logger.php');
    include('inputValidation.php');
    include("db.php");
    $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);

@@ -2,6 +2,7 @@
     include("config.php");
     include("db.php");
     include('inputValidation.php');
+    include('logger.php');
 
     $userName = test_input($_POST['registerName']);
     $userPassword = test_input(md5($_POST['registerPassword']));
@@ -61,13 +62,22 @@
                     $stmt->bind_param("sssssssi", $userName, $userPassword, $salt, $userEmail, $emailHash, $saltEmail, $userStudie, $userYear);
                     $stmt->execute();
                     echo "Bruker lagt til";
+
+                    // Logger at en bruker ble opprettet
+                    $Log->info('En bruker ble laget.', ['Navn:'=>$userName]);
                 } else {
+                    // Logger at en bruker allerede finnes
+                    $Log->info('Noen prøvde å lage en bruker som finnes, idiot :)');
+
                     echo "Bruker allerede registrert";
                 }
                 $stmt->close();
                 $conn->close();
             }
         } else {
+            // Logger at alle felter ikke ble fylt ut
+            $Log->info('Bruker ble ikke laget pga alle felter ikke var fylt ut');
+
             echo "Du må fylle ut alle feltene";
             die();
         }

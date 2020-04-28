@@ -11,8 +11,6 @@
 
    $ses_sql = "";
 
-
-
    if($user_type == "brukeretabell") {
         $ses_sql = "SELECT idBruker, brukerNavn, brukerType FROM brukeretabell WHERE brukerEmail = ?";
    } else if($user_type == "foreleser") {

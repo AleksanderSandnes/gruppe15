@@ -1,28 +1,8 @@
 <?php
-    // Composer autoloader
-    require __DIR__ . '../vendor/autoload.php';
-
+    include('logger.php');
     include("config.php");
     include("db.php");
     include('inputValidation.php');
-
-    // Shortcuts for simpler usage
-    use Monolog\Logger;
-    use Monolog\Formatter\LineFormatter;
-    use Monolog\Handler\StreamHandler;
-
-    // Common Logger
-    $Log = new Logger('log-files');
-
-    // Line formatter without empty brackets in the end
-    $formatter = new LineFormatter(null, null, false, true);
-
-    // Informational level handler
-    $informationHandler = new StreamHandler('../logs/error.log', Logger::INFO);
-    $informationHandler->setFormatter($formatter);
-
-    //This will have only INFORMATIONAL messages
-    $Log->pushHandler($informationHandler);
 
     $navn = test_input($_POST['registerName']);
     $email = test_input($_POST['registerEmail']);
@@ -38,13 +18,13 @@
             $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
             if (mysqli_connect_error()) {
-                die('Connect Error('. mysqli_connect_errno().')'. mysqli_connect_error());
+                die('Connect Error(' . mysqli_connect_errno() . ')' . mysqli_connect_error());
             } else {
                 $SELECT = "SELECT brukerEmail FROM foreleser WHERE brukerEmail = ? LIMIT 1";
                 $INSERT = "INSERT INTO foreleser(brukerNavn, brukerEmail, brukerEmailHash, brukerPassord, salt, saltEmail, brukerURL, brukerType, godkjentAvAdmin) VALUES (?, ?, ?, ?, ?, ?, ?, 2,0)";
 
                 $stmt = $conn->prepare($SELECT);
-                $stmt->bind_param("s",$email);
+                $stmt->bind_param("s", $email);
                 $stmt->execute();
                 $stmt->bind_result($email);
                 $stmt->store_result();
@@ -56,23 +36,23 @@
                     $saltPass = "";
                     $saltEmail = "";
 
-                    for($i = 0; $i<rand(10,20);$i++) {
-                        $tallEllerBokstav = rand(1,2);
-                        if($tallEllerBokstav == 1) {
-                            $tilfeldigBokstav = rand(0,25);
+                    for ($i = 0; $i < rand(10, 20); $i++) {
+                        $tallEllerBokstav = rand(1, 2);
+                        if ($tallEllerBokstav == 1) {
+                            $tilfeldigBokstav = rand(0, 25);
                             $saltPass .= $alphas[$tilfeldigBokstav];
-                        } else if($tallEllerBokstav == 2) {
-                            $tilfeldigBokstav = rand(0,8);
+                        } else if ($tallEllerBokstav == 2) {
+                            $tilfeldigBokstav = rand(0, 8);
                             $saltPass .= $numbers[$tilfeldigBokstav];
                         }
                     }
-                    for($i = 0; $i<rand(10,20);$i++) {
-                        $tallEllerBokstav = rand(1,2);
-                        if($tallEllerBokstav == 1) {
-                            $tilfeldigBokstav = rand(0,25);
+                    for ($i = 0; $i < rand(10, 20); $i++) {
+                        $tallEllerBokstav = rand(1, 2);
+                        if ($tallEllerBokstav == 1) {
+                            $tilfeldigBokstav = rand(0, 25);
                             $saltEmail .= $alphas[$tilfeldigBokstav];
-                        } else if($tallEllerBokstav == 2) {
-                            $tilfeldigBokstav = rand(0,8);
+                        } else if ($tallEllerBokstav == 2) {
+                            $tilfeldigBokstav = rand(0, 8);
                             $saltEmail .= $numbers[$tilfeldigBokstav];
                         }
                     }
@@ -83,7 +63,7 @@
 
                     //bilde
                     //BURDE BRUKE REGEX
-                    if (($_FILES['registerBilde']['name']!="")){
+                    if (($_FILES['registerBilde']['name'] != "")) {
                         // Where the file is going to be stored
                         $target_dir = "../images/";
                         $file = $_FILES['registerBilde']['name'];
@@ -91,55 +71,57 @@
                         $filename = $path['filename'];
                         $ext = $path['extension'];
                         $temp_name = $_FILES['registerBilde']['tmp_name'];
-                        $path_filename_ext = $target_dir.$filename.".".$ext;
+                        $path_filename_ext = $target_dir . $filename . "." . $ext;
 
-                        preg_match('/^[a-zA-Z0-9_-]+.jpg$/', $file, $match,PREG_OFFSET_CAPTURE);
+                        preg_match('/^[a-zA-Z0-9_-]+.jpg$/', $file, $match, PREG_OFFSET_CAPTURE);
 
-                    if($match) {
-                        // Check if file already exists
-                        if (file_exists($path_filename_ext)) {
-                            // Sender en log om at noen prøvde å legge til en fil som allerede finnes
-                            $Log->info("En bruker prøvde å laste opp et bilde som allerede finnes");
+                        if ($match) {
+                            // Check if file already exists
+                            if (file_exists($path_filename_ext)) {
+                                // Sender en log om at noen prøvde å legge til en fil som allerede finnes
+                                $Log->info("En bruker prøvde å laste opp et bilde som allerede finnes");
 
-                             echo "Sorry, file already exists.<br>";
+                                echo "Sorry, file already exists.<br>";
+                            } else {
+                                move_uploaded_file($temp_name, $path_filename_ext);
+                                echo "Congratulations! File Uploaded Successfully.<br>";
+                                echo "Bruker lagt til";
+
+                                // Sender en log om at bruker ble opprettet.
+                                $Log->info("En bruker ble opprettet.", ['brukernavn' => $navn]);
+
+                                $stmt->execute();
+                            }
                         } else {
-                            move_uploaded_file($temp_name,$path_filename_ext);
-                            echo "Congratulations! File Uploaded Successfully.<br>";
-                            echo "Bruker lagt til";
+                            echo "<h1>Hacketty hack hack</h1>";
+                            echo "<img style='width:50%' src='../images/tumpTan.jpg'>";
+                            echo "<br>*Psst* Brukeren ble ikke lagt til";
 
-                            // Sender en log om at bruker ble opprettet.
-                            $Log->info("En bruker ble opprettet.", ['brukernavn'=>$navn]);
-
-                            $stmt->execute();
+                            // Sender inn en log
+                            $Log->info('Noen prøvde å opprette en bruker men klarte det ikke');
                         }
                     } else {
-                        echo "<h1>Hacketty hack hack</h1>";
-                        echo "<img style='width:50%' src='../images/tumpTan.jpg'>";
-                        echo "<br>*Psst* Brukeren ble ikke lagt til";
-
-                        // Sender inn en log
-                        $Log->info('Noen prøvde å opprette en bruker men klarte det ikke');
+                        echo "Bruker allerede registrert";
                     }
                 } else {
+                    // Logger feilet forsøk
+                    $Log->info('Noen prøvde å opprette en bruker som allerede finnes');
+
                     echo "Bruker allerede registrert";
                 }
-            } else {
-                // Logger feilet forsøk
-                $Log->info('Noen prøvde å opprette en bruker som allerede finnes');
-
-                echo "Bruker allerede registrert";
+            }
+        }
+        else {
+                echo "Du må fylle ut alle feltene";
+                die();
             }
         } else {
+            // Logger at noen ikke fyllte ut alle feltene
+            $Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
+
             echo "Du må fylle ut alle feltene";
             die();
-        }
-    } else {
-        // Logger at noen ikke fyllte ut alle feltene
-        $Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
-
-        echo "Du må fylle ut alle feltene";
-        die();
-        echo "  Brukeren ble ikke lagt til.
+            echo "  Brukeren ble ikke lagt til.
                 <br><strong>Grunn:</strong>
                 <br> Passord må inneholde minst: 
                 <ul>
@@ -149,7 +131,7 @@
                     <li>Ett spesialtegn</li>
                 </ul>";
     }
-
-?><html">
-<h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>
+?>
+<html>
+    <h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>
 </html>

@@ -2,6 +2,7 @@
    include('config.php');
    include('db.php');
    include('inputValidation.php');
+   include('logger.php');
 
    $fagKode = test_input($_POST['fagManVilSe']);
 
@@ -29,6 +30,9 @@
                 }
            }
        } else {
+           // Logger at feil emnekode er oppgitt
+           $Log->info('Feil emnekode ble oppgitt når det ble søkt etter emner');
+
             echo "Feil emnekode gett";
        }
        $conn->close();

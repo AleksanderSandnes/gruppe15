@@ -1,5 +1,6 @@
 <?php
    include('cookiemonster.php');
+   include('logger.php');
 
    if(checkCookies(1)) {
        include('session.php');
@@ -20,6 +21,9 @@
                 $stmt->bind_param("isi", $login_id, $melding, $teacherId);
                 $stmt->execute();
                 echo "Meldingen er sendt";
+
+                // Logger at en melding blir sendt
+                $Log->info('En melding ble sendt fra en bruker til en foreleser.', ['ForeleserID:'=>$teacherId]);
 
                 $stmt->close();
                 $conn->close();
