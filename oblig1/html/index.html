@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../css/button.css">
     <title>Oblig 1 | Gruppe 15</title>
     <script type="text/javascript" src="../js/index.js"></script>
+    <script type="text/javascript" src="../js/checkSamePasswordNewPassword.js"></script>
   </head>
   <body>
     <main>
@@ -34,6 +35,8 @@
           <input id="forgotPasswordOldPassword" type="text" name="forgotPasswordOldPassword" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
           <label for="forgotPasswordNewPassword">Nytt passord</label>
           <input id="forgotPasswordNewPassword" type="password" name="forgotPasswordNewPassword" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+          <label for="forgotPasswordNewPasswordAgain">Nytt passord på nytt</label>
+          <input id="forgotPasswordNewPasswordAgain" type="password" name="forgotPasswordNewPasswordAgain" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
           <label for="userForgotPasswordTypeBruker">Type bruker:</label>
           <select id="userForgotPasswordTypeBruker" name="typeBruker" required>
             <option value="brukeretabell">Elev</option>
@@ -57,6 +60,8 @@
             <input id="registerName" type="text" name="registerName" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
             <label for="registerPassword">Passord</label>
             <input id="registerPassword" type="password" name="registerPassword" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+            <label for="registerPasswordAgain">Passord på nytt</label>
+            <input id="registerPasswordAgain" type="password" name="registerPasswordAgain" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
             <label for="registerEmail">Email</label>
             <input id="registerEmail" type="email" name="registerEmail" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
             <label for="userRegisterStudie">Studieretning:</label>
@@ -74,11 +79,13 @@
             <input type="text" name="registerName" id="navn" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
             <label for="passord">Passord</label>
             <input type="password" name="registerPassword" id="passord" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
+            <label for="passordAgain">Passord</label>
+            <input type="password" name="registerPasswordAgain" id="passordAgain" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
             <label for="email">Mail</label>
             <input type="email" name="registerEmail" id="email" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
             <label for="bilde">Bilde</label>
             <input type="file" accept="image/jpeg" name="registerBilde" id="bilde" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
-            <input type="submit" name="submit" value="Registrer" />
+            <input type="submit" name="submit" id="registerBtnTeacher" value="Registrer" />
           </form>
         </article>
       </section>

@@ -1,6 +1,7 @@
 window.onload = oppstart;
 
 function oppstart() {
+    passordSamme();
     var type = document.getElementById("register");
     var student = document.getElementById("studentRegister");
     var teacher = document.getElementById("teacherRegister");
