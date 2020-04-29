@@ -1,4 +1,8 @@
 <?php
+
+    $timeLoginDelay = rand(1, 2);
+
+    sleep($timeLoginDelay);
     include("config.php");
     include("db.php");
     include('inputValidation.php');

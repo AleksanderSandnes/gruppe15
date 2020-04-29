@@ -1,6 +1,11 @@
 <?php
+
+    $timeLoginDelay = rand(1, 2);
+
+    sleep($timeLoginDelay);
+
     // Composer autoloader
-    require __DIR__ . '../vendor/autoload.php';
+    require __DIR__ . '/../vendor/autoload.php';
 
     // Shortcuts for simpler usage
     use Monolog\Logger;
@@ -79,14 +84,19 @@
                setCookies("passwordCookie", $mypassword . $saltet);
                time_nanosleep(0, 10000000000 * (log($attempt)^10));
                header("location: welcome$typeBruker.php");
+
            } else {
+               echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
                // Logger feil innlogging creds
                $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
 
                $attempt++;
                $error = "Your Login Name or Password is invalid. The number of attempts is now '.$attempt.'";
-               exit("<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>");
            }
+       } else {
+           echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
        }
    }
-?>
+?><html">
+<h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>
+</html>
