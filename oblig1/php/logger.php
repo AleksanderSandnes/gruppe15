@@ -1,6 +1,6 @@
 <?php
     // Composer autoloader
-    require __DIR__ . '../vendor/autoload.php';
+    require __DIR__ . '/../vendor/autoload.php';
 
     // Shortcuts for simpler usage
     use Monolog\Logger;

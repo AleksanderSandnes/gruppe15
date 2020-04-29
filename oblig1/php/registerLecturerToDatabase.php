@@ -4,7 +4,7 @@
 
     sleep($timeLoginDelay);
     // Composer autoloader
-    require __DIR__ . '../vendor/autoload.php';
+    require __DIR__ . '/../vendor/autoload.php';
 
     include("logger.php");
     include("config.php");
@@ -117,15 +117,12 @@
                 }
             }
         } else {
+                // Logger at noen ikke fyllte ut alle feltene
+                $Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
                 echo "Du må fylle ut alle feltene";
                 die();
         }
     } else {
-            // Logger at noen ikke fyllte ut alle feltene
-            $Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
-
-            echo "Du må fylle ut alle feltene";
-            die();
             echo "  Brukeren ble ikke lagt til.
                 <br><strong>Grunn:</strong>
                 <br> Passord må inneholde minst:
