@@ -6,27 +6,10 @@
     // Composer autoloader
     require __DIR__ . '../vendor/autoload.php';
 
+    include("logger.php");
     include("config.php");
     include("db.php");
     include('inputValidation.php');
-
-    // Shortcuts for simpler usage
-    use Monolog\Logger;
-    use Monolog\Formatter\LineFormatter;
-    use Monolog\Handler\StreamHandler;
-
-    // Common Logger
-    $Log = new Logger('log-files');
-
-    // Line formatter without empty brackets in the end
-    $formatter = new LineFormatter(null, null, false, true);
-
-    // Informational level handler
-    $informationHandler = new StreamHandler('../logs/error.log', Logger::INFO);
-    $informationHandler->setFormatter($formatter);
-
-    //This will have only INFORMATIONAL messages
-    $Log->pushHandler($informationHandler);
 
     $navn = test_input($_POST['registerName']);
     $email = test_input($_POST['registerEmail']);
@@ -134,8 +117,8 @@
                 }
             }
         } else {
-            echo "Du må fylle ut alle feltene";
-            die();
+                echo "Du må fylle ut alle feltene";
+                die();
         }
     } else {
             // Logger at noen ikke fyllte ut alle feltene
@@ -145,7 +128,7 @@
             die();
             echo "  Brukeren ble ikke lagt til.
                 <br><strong>Grunn:</strong>
-                <br> Passord må inneholde minst: 
+                <br> Passord må inneholde minst:
                 <ul>
                     <li>En liten bokstav</li>
                     <li>En stor bokstav</li>

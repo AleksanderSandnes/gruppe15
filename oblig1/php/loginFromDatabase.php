@@ -1,5 +1,4 @@
 <?php
-
     $timeLoginDelay = rand(1, 2);
 
     sleep($timeLoginDelay);
@@ -32,6 +31,7 @@
     // This will have only INFORMATIONAL messages
     $Log->pushHandler($informationalHandler);
 
+   include('logger.php');
    include("cookiemonster.php");
    include("db.php");
    include('inputValidation.php');

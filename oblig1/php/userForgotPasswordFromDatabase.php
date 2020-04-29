@@ -1,6 +1,7 @@
 <?php
    include('inputValidation.php');
    include("db.php");
+   include('logger.php');
 
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
@@ -23,6 +24,9 @@
       $stmtsql = $conn->prepare($sql);
       $stmtsql->bind_param("sss", $myNewPasswordHASH, $myEmailHASH, $myOldPasswordHASH);
       $stmtsql->execute();
+
+      // Logger at en bruker har fått nytt passord
+      $Log->info('En bruker har fått nytt passord.', ['BrukerEmail'=>$myEmail]);
    }
 ?><html">
       <h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>

@@ -1,6 +1,7 @@
 <?php
    include('inputValidation.php');
    include('cookiemonster.php');
+   include('logger.php');
 
    if(checkCookies(3)) {
        include("db.php");
@@ -15,6 +16,10 @@
           $stmtsql = $conn->prepare($sql);
           $stmtsql->bind_param("i",$brukerID);
           $stmtsql->execute();
+
+          // Logger at en bruker er godkjent
+          $Log->info("En bruker har blitt godkjent.", ['Brukerid'=>$brukerID]);
+
           echo "Bruker godkjent";
        }
    } else {
