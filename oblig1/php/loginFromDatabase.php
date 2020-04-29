@@ -53,20 +53,31 @@
        } else if ($typeBruker == "anonym") {
            header("location: welcome$typeBruker.php");
        } else if ($typeBruker == "foreleser") {
-           $sql = "SELECT idBruker, salt, saltEmail FROM foreleser WHERE brukerEmail = ? and brukerPassord = ?";
+           $sql = "SELECT idBruker, salt, saltEmail, passordSistOppdatert FROM foreleser WHERE brukerEmail = ? and brukerPassord = ?";
        } else if ($typeBruker == "brukeretabell") {
-           $sql = "SELECT idBruker, salt, saltEmail FROM brukeretabell WHERE brukerEmail = ? and brukerPassord = ?";
+           $sql = "SELECT idBruker, salt, saltEmail, passordSistOppdatert FROM brukeretabell WHERE brukerEmail = ? and brukerPassord = ?";
        }
        $stmtsql = $conn->prepare($sql);
        $stmtsql->bind_param("ss", $myusername, $mypassword);
        $stmtsql->execute();
-       $stmtsql->bind_result($idBrukeren, $salt, $saltEmail);
+       if ($typeBruker == "foreleser" || $typeBruker == "brukeretabell")
+           $stmtsql->bind_result($idBrukeren, $salt, $saltEmail, $passordSistOppdatert);
+       else
+           $stmtsql->bind_result($idBrukeren, $salt, $saltEmail);
        $stmtsql->store_result();
        $rnumm = $stmtsql->num_rows;
 
        $saltet = "";
        $saltetEmail = "";
+       $maaByttePassord = false;
        while ($stmtsql->fetch()) {
+           if ($typeBruker == "foreleser" || $typeBruker == "brukeretabell") {
+               $tidNaa = time();
+               $your_date = strtotime($passordSistOppdatert);
+               echo ($tidNaa - $your_date) / (60 * 60 * 24 * 7 * 52);
+               if ((($tidNaa - $your_date) / (60 * 60 * 24 * 7 * 52)) > 0.5)
+                   $maaByttePassord = true;
+           }
            $saltet = $salt;
            $saltetEmail = $saltEmail;
        }
@@ -82,8 +93,12 @@
 
                setCookies("emailCookie", md5($myusername) . $saltetEmail);
                setCookies("passwordCookie", $mypassword . $saltet);
-               time_nanosleep(0, 10000000000 * (log($attempt)^10));
-               header("location: welcome$typeBruker.php");
+               if ($maaByttePassord)
+                   echo "<h2>Venligst les:</h2>Som en sikkerhet på denne siden må du bytte passord hver 6 måned.<br>
+                         I denne sammenhengen vil vi meddele at det er lengre enn 6 måneder siden du byttet passord.<br>
+                         Vi ber deg dermed pent om å gå tilbake og bytte passord.";
+               else
+                   header("location: welcome$typeBruker.php");
 
            } else {
                echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";

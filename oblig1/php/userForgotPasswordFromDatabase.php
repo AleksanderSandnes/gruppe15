@@ -22,13 +22,29 @@
               $myOldPasswordHASH = md5($myOldPassword);
               $myNewPasswordHASH = md5($myNewPassword);
 
+              $alphas = range('a', 'z');
+              $numbers = range(1, 9);
+              $salt = "";
+              $dagensDato = date("Y-m-d");
+
+              for ($i = 0; $i < rand(10, 20); $i++) {
+                  $tallEllerBokstav = rand(1, 2);
+                  if ($tallEllerBokstav == 1) {
+                      $tilfeldigBokstav = rand(0, 25);
+                      $salt .= $alphas[$tilfeldigBokstav];
+                  } else if ($tallEllerBokstav == 2) {
+                      $tilfeldigBokstav = rand(0, 8);
+                      $salt .= $numbers[$tilfeldigBokstav];
+                  }
+              }
+
               if ($typeBruker == "brukeretabell") {
-                  $sql = "UPDATE brukeretabell SET brukerPassord = ? WHERE brukerEmailHash = ? AND brukerPassord = ?";
+                  $sql = "UPDATE brukeretabell SET brukerPassord = ?, salt = ?, passordSistOppdatert = ? WHERE brukerEmailHash = ? AND brukerPassord = ?";
               } else if ($typeBruker == "foreleser") {
-                  $sql = "UPDATE foreleser SET brukerPassord = ? WHERE brukerEmailHash = ? AND brukerPassord = ?";
+                  $sql = "UPDATE foreleser SET brukerPassord = ?, salt = ?, passordSistOppdatert = ? WHERE brukerEmailHash = ? AND brukerPassord = ?";
               }
               $stmtsql = $conn->prepare($sql);
-              $stmtsql->bind_param("sss", $myNewPasswordHASH, $myEmailHASH, $myOldPasswordHASH);
+              $stmtsql->bind_param("sssss", $myNewPasswordHASH, $salt, $dagensDato, $myEmailHASH, $myOldPasswordHASH);
               $stmtsql->execute();
 
               // Logger at en bruker har fått nytt passord
