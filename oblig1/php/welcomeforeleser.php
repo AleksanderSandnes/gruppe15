@@ -13,6 +13,6 @@
    } else {
        delCookies("emailCookie");
        delCookies("passwordCookie");
-       header("Location: ../html/index.html");
+       header("Location: ../html/index.php");
    }
 ?>

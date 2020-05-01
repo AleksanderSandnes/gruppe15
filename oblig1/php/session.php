@@ -6,8 +6,16 @@
    }
    $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
-   $user_check = $_SESSION['login_user'];
-   $user_type = $_SESSION['login_type'];
+   if (isset($_SESSION['login_user']))
+       $user_check = $_SESSION['login_user'];
+
+   if (isset($_SESSION['login_type']))
+       $user_type = $_SESSION['login_type'];
+
+   if (!isset($_SESSION['login_user']) && !isset($_SESSION['login_type']))
+       header("location: ../html/index.php");
+
+
 
    $ses_sql = "";
 
@@ -40,7 +48,7 @@
    }
 
    if(!isset($_SESSION['login_user'])){
-      header("location: ../html/index.html");
+      header("location: ../html/index.php");
       die();
    }
 ?>

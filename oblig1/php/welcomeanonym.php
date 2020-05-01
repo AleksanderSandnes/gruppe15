@@ -11,7 +11,7 @@
    <body>
        <ul>
            <li><a class="active" href="welcomeanonym.php" target="_top">Gjestesiden</a></li>
-           <li><a href="../html/index.html" target="_top">HJEM</a></li>
+           <li><a href="../html/index.php" target="_top">HJEM</a></li>
            <li><a href="logout.php" target="_top">Logg ut</a> </li>
        </ul>
 

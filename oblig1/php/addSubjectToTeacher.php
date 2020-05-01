@@ -68,6 +68,6 @@ if(checkCookies(2)) {
    } else {
        delCookies("emailCookie");
        delCookies("passwordCookie");
-       header("Location: ../html/index.html");
+       header("Location: ../html/index.php");
    }
 ?>
