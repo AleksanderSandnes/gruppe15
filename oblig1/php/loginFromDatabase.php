@@ -1,35 +1,8 @@
 <?php
+
     $timeLoginDelay = rand(1, 2);
 
     sleep($timeLoginDelay);
-
-    // Composer autoloader
-    require __DIR__ . '/../vendor/autoload.php';
-
-    // Shortcuts for simpler usage
-    use Monolog\Logger;
-    use Monolog\Formatter\LineFormatter;
-    use Monolog\Handler\StreamHandler;
-
-    // Common Logger
-    $Log = new Logger('log-files');
-
-    // Line formatter without empty brackets in the end
-    $formatter = new LineFormatter(null, null, false, true);
-
-    // Notice level handler
-    $noticeHandler = new StreamHandler('../logs/notice.log', Logger::NOTICE);
-    $noticeHandler->setFormatter($formatter);
-
-    // Informational level handler
-    $informationalHandler = new StreamHandler('../logs/informational.log', Logger::INFO);
-    $informationalHandler->setFormatter($formatter);
-
-    // This will have only NOTICE messages
-    $Log->pushHandler($noticeHandler);
-
-    // This will have only INFORMATIONAL messages
-    $Log->pushHandler($informationalHandler);
 
    include('logger.php');
    include("cookiemonster.php");
