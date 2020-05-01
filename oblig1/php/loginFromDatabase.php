@@ -90,31 +90,23 @@
 
                setCookies("emailCookie", md5($myusername) . $saltetEmail);
                setCookies("passwordCookie", $mypassword . $saltet);
-               header("location: welcome$typeBruker.php");
-           } else {
-              $_SESSION["login_attempts"] += 1;
 
-               // Logger feil innlogging creds
-               $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
-
-               if ($maaByttePassord)
+               if ($maaByttePassord) {
                    echo "<h2>Venligst les:</h2>Som en sikkerhet på denne siden må du bytte passord hver 6 måned.<br>
                          I denne sammenhengen vil vi meddele at det er lengre enn 6 måneder siden du byttet passord.<br>
                          Vi ber deg dermed pent om å gå tilbake og bytte passord.";
+               }
                else
                    header("location: welcome$typeBruker.php");
 
-           } else {
-               echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
-               // Logger feil innlogging creds
-               $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
-
-               $attempt++;
-               $error = "Your Login Name or Password is invalid. The number of attempts is now '.$attempt.'";
            }
        } else {
-           echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
-       }
+       echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
+
+       $_SESSION["login_attempts"] += 1;
+
+       // Logger feil innlogging creds
+       $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
    }
 ?><html">
 <h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>
