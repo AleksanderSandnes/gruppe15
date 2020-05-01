@@ -39,27 +39,22 @@
            $saltetEmail = $saltEmail;
        }
 
-       $attempt = 0;
-
        if ($rnumm == 1) {
            $_SESSION['login_user'] = $myusername;
            $_SESSION['login_type'] = $typeBruker;
-           if ($attempt < 4) {
                // Logger riktig innlogging
                $Log->info('Bruker logget inn', ['brukernavn'=>$myusername]);
 
                setCookies("emailCookie", md5($myusername) . $saltetEmail);
                setCookies("passwordCookie", $mypassword . $saltet);
-               time_nanosleep(0, 10000000000 * (log($attempt)^10));
                header("location: welcome$typeBruker.php");
            } else {
+              $_SESSION["login_attempts"] += 1;
+
                // Logger feil innlogging creds
                $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
 
-               $attempt++;
-               $error = "Your Login Name or Password is invalid. The number of attempts is now '.$attempt.'";
                exit("<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>");
            }
-       }
    }
 ?>
