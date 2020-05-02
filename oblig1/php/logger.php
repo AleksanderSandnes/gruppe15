@@ -12,6 +12,8 @@
     use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
     use Monolog\Handler\GelfHandler;
     use Gelf\Message;
+    use Gelf\Publisher;
+    use Gelf\Transport\UdpTransport;
     use Monolog\Formatter\GelfMessageFormatter;
 
     // Common Logger
