@@ -23,7 +23,6 @@
     if ($password == $passwordAgain) {
         if ($matchPassordKrav) {
             if (!empty($navn) || !empty($email) || !empty($passord)) {
-                echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
                 $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
 
                 if (mysqli_connect_error()) {

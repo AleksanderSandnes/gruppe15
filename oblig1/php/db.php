@@ -1,6 +1,6 @@
 <?php
    $host = 'localhost';
-   $dbUsername = 'root';
-   $dbPassword = 'Gruppe15...123';
+   $dbUsername = 'per';
+   $dbPassword = 'Per...Spelmann420';
    $dbname = 'brukere';
 ?>

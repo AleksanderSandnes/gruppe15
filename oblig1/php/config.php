@@ -3,10 +3,10 @@
        define('DB_HOST', 'localhost');
    }
    if (!defined('DB_USERNAME')) {
-       define('DB_USERNAME', 'root');
+       define('DB_USERNAME', 'per');
    }
    if (!defined('DB_PASSWORD')) {
-       define('DB_PASSWORD', 'Gruppe15...123');
+       define('DB_PASSWORD', 'Per...Spelmann420');
    }
    if (!defined('DB_NAME')) {
        define('DB_NAME', 'brukere');
