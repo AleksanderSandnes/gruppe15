@@ -47,7 +47,6 @@
            if ($typeBruker == "foreleser" || $typeBruker == "brukeretabell") {
                $tidNaa = time();
                $your_date = strtotime($passordSistOppdatert);
-               echo ($tidNaa - $your_date) / (60 * 60 * 24 * 7 * 52);
                if ((($tidNaa - $your_date) / (60 * 60 * 24 * 7 * 52)) > 0.5)
                    $maaByttePassord = true;
            }
@@ -58,22 +57,21 @@
        if ($rnumm == 1) {
            $_SESSION['login_user'] = $myusername;
            $_SESSION['login_type'] = $typeBruker;
-               // Logger riktig innlogging
-               $Log->info('Bruker logget inn', ['brukernavn'=>$myusername]);
+           // Logger riktig innlogging
+           $Log->info('Bruker logget inn', ['brukernavn'=>$myusername]);
 
-               setCookies("emailCookie", md5($myusername) . $saltetEmail);
-               setCookies("passwordCookie", $mypassword . $saltet);
+           setCookies("emailCookie", md5($myusername) . $saltetEmail);
+           setCookies("passwordCookie", $mypassword . $saltet);
 
-               if ($maaByttePassord) {
-                   echo "<h2>Venligst les:</h2>Som en sikkerhet på denne siden må du bytte passord hver 6 måned.<br>
-                         I denne sammenhengen vil vi meddele at det er lengre enn 6 måneder siden du byttet passord.<br>
-                         Vi ber deg dermed pent om å gå tilbake og bytte passord.";
-               }
-               else
-                   header("location: welcome$typeBruker.php");
-
+           if ($maaByttePassord) {
+               echo "<h2>Venligst les:</h2>Som en sikkerhet på denne siden må du bytte passord hver 6 måned.<br>
+                     I denne sammenhengen vil vi meddele at det er lengre enn 6 måneder siden du byttet passord.<br>
+                     Vi ber deg dermed pent om å gå tilbake og bytte passord.";
            }
-       } else {
+           else
+               header("location: welcome$typeBruker.php");
+       }
+   } else {
        echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
 
        $_SESSION["login_attempts"] += 1;
