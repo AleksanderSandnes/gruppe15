@@ -19,38 +19,51 @@
     // Common Logger
     $Log = new Logger('log-files');
 
+    $transport = new Gelf\Transport\UdpTransport("127.0.0.1", 12201);
+
+    $publisher = new Gelf\Publisher($transport);
+
     // Line formatter without empty brackets in the end
     $formatter = new LineFormatter(null, null, false, true);
 
     // 0 - Emergency level handler
-    $emergencyHandler = new StreamHandler('../logs/emergency.log', Logger::EMERGENCY);
+    //$emergencyHandler = new StreamHandler('../logs/emergency.log', Logger::EMERGENCY);
+    $emergencyHandler = new GelfHandler($publisher, Logger::EMERGENCY);
     $emergencyHandler->setFormatter($formatter);
 
     // 1- Alert level handler
-    $alertHandler = new StreamHandler('../logs/alert.log', Logger::ALERT);
+    //$alertHandler = new StreamHandler('../logs/alert.log', Logger::ALERT);
+    $alertHandler = new GelfHandler($publisher, Logger::ALERT);
     $alertHandler->setFormatter($formatter);
 
     // 2 - Critical level handler
-    $criticalHandler = new StreamHandler('../logs/critical.log', Logger::CRITICAL);
+    //$criticalHandler = new StreamHandler('../logs/critical.log', Logger::CRITICAL);
+    $criticalHandler = new GelfHandler($publisher, Logger::CRITICAL);
+    $criticalHandler->setFormatter($formatter);
 
     // 3 - Error level handler
-    $errorHandler = new StreamHandler('../logs/error.log', Logger::ERROR);
+    //$errorHandler = new StreamHandler('../logs/error.log', Logger::ERROR);
+    $errorHandler = new GelfHandler($publisher, Logger::ERROR);
     $errorHandler->setFormatter($formatter);
 
     // 4 - Warning level handler
-    $warningHandler = new StreamHandler('../logs/warning.log', Logger::WARNING);
+    //$warningHandler = new StreamHandler('../logs/warning.log', Logger::WARNING);
+    $warningHandler = new GelfHandler($publisher, Logger::WARNING);
     $warningHandler->setFormatter($formatter);
 
     // 5 - Notice level handler
-    $noticeHandler = new StreamHandler('../logs/notice.log', Logger::NOTICE);
+    //$noticeHandler = new StreamHandler('../logs/notice.log', Logger::NOTICE);
+    $noticeHandler = new GelfHandler($publisher, Logger::NOTICE);
     $noticeHandler->setFormatter($formatter);
 
     // 6 - Informational level handler
-    $informationalHandler = new StreamHandler('../logs/informational.log', Logger::INFO);
+    //$informationalHandler = new StreamHandler('../logs/informational.log', Logger::INFO);
+    $informationalHandler = new GelfHandler($publisher, Logger::INFO);
     $informationalHandler->setFormatter($formatter);
 
     // 7 - Debug level handler
-    $debugHandler = new StreamHandler('../logs/debug.log', Logger::DEBUG);
+    //$debugHandler = new StreamHandler('../logs/debug.log', Logger::DEBUG);
+    $debugHandler = new GelfHandler($publisher, Logger::DEBUG);
     $debugHandler->setFormatter($formatter);
 
     // 0 - This will only have EMERGENCY messages
