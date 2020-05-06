@@ -5,11 +5,6 @@
     // Shortcuts for simpler usage
     use Monolog\Logger;
     use Monolog\Formatter\LineFormatter;
-    use Monolog\Handler\StreamHandler;
-    use Monolog\Handler\LogglyHandler;
-    use Monolog\Formatter\LogglyFormatter;
-    use Monolog\Handler\FingersCrossedHandler;
-    use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
     use Monolog\Handler\GelfHandler;
     use Gelf\Message;
     use Gelf\Publisher;
