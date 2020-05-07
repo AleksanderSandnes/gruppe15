@@ -43,6 +43,11 @@
             <option value="foreleser">Foreleser</option>
           </select>
           <button type="submit" value="Submit" id="forgotPasswordBtn">Glemt passord</button>
+          <p><strong>Hvis button er grå/disabled:</strong></p>
+          <ul>
+              <li>Passordene er ikke like</li>
+              <li>Passord er ikke innenfor reglementet (Minst en liten bokstav, en stor bokstav, ett tall og et spesialtegn)</li>
+          </ul>
         </form>
       </section>
 
@@ -69,6 +74,11 @@
             <label for="userRegisterYear">Kull:</label>
             <input type="text" minlength="4" maxlength="4" id="userRegisterYear" name="registerYear" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
             <button type="submit" value="Submit" id="registerBtn">Registrer</button>
+            <p><strong>Hvis button er grå/disabled:</strong></p>
+            <ul>
+                <li>Passordene er ikke like</li>
+                <li>Passord er ikke innenfor reglementet (Minst en liten bokstav, en stor bokstav, ett tall og et spesialtegn)</li>
+            </ul>
           </form>
         </article>
 
@@ -86,6 +96,11 @@
             <label for="bilde">Bilde</label>
             <input type="file" accept="image/jpeg" name="registerBilde" id="bilde" required spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"/>
             <input type="submit" name="submit" id="registerBtnTeacher" value="Registrer" />
+            <p><strong>Hvis button er grå/disabled:</strong></p>
+              <ul>
+                  <li>Passordene er ikke like</li>
+                  <li>Passord er ikke innenfor reglementet (Minst en liten bokstav, en stor bokstav, ett tall og et spesialtegn)</li>
+              </ul>
           </form>
         </article>
       </section>
