@@ -1,6 +1,6 @@
 <?php
    include('cookiemonster.php');
-   include('logger.php');
+   //include('logger.php');
 
    if(checkCookies(2)) {
        include('session.php');
@@ -22,7 +22,7 @@
                 $stmt->execute();
 
                 // Logger alle meldinger som blir sendt
-                $Log->info('En bruker har sendt en melding.', ['MeldingsID'=>$meldingsId]);
+                //$Log->info('En bruker har sendt en melding.', ['MeldingsID'=>$meldingsId]);
 
                 echo "Meldingen er sendt";
 
@@ -32,7 +32,7 @@
             }
        } else {
            // Logger feilet sending
-           $Log->info('Noen prøvde å sende en melding men feilet');
+           //$Log->info('Noen prøvde å sende en melding men feilet');
 
             echo "Du må fylle ut alle feltene";
             die();

@@ -1,5 +1,5 @@
 <?php
-   include('logger.php');
+   //include('logger.php');
    include('inputValidation.php');
    include("db.php");
    $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
@@ -14,7 +14,7 @@
       $stmtsql->execute();
 
       // Sender log om at melding er rapportert
-      $Log->info('Noen har rapportert en melding', ['meldingID:'=>$meldingID]);
+      //$Log->info('Noen har rapportert en melding', ['meldingID:'=>$meldingID]);
 
       echo "Melding rapportert";
    }

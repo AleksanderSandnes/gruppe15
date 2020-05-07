@@ -26,7 +26,7 @@
                     }
                }
            } else {
-                echo "Feil emnekode gett";
+                echo "Ingen lærere å godkjenne";
            }
            $conn->close();
        }

@@ -1,6 +1,6 @@
 <?php
    include('cookiemonster.php');
-   include('logger.php');
+   //include('logger.php');
 
    if(checkCookies(1)) {
        include('session.php');
@@ -23,7 +23,7 @@
                 echo "Meldingen er sendt";
 
                 // Logger at en melding blir sendt
-                $Log->info('En melding ble sendt fra en bruker til en foreleser.', ['ForeleserID:'=>$teacherId]);
+                //$Log->info('En melding ble sendt fra en bruker til en foreleser.', ['ForeleserID:'=>$teacherId]);
 
                 $stmt->close();
                 $conn->close();

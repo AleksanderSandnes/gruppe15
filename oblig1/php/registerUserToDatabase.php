@@ -6,7 +6,7 @@
     include("config.php");
     include("db.php");
     include('inputValidation.php');
-    include('logger.php');
+    //include('logger.php');
 
     $userName = test_input($_POST['registerName']);
     $userPassword = test_input(md5($_POST['registerPassword']));
@@ -27,7 +27,7 @@
                     die('Connect Error(' . mysqli_connect_errno() . ')' . mysqli_connect_error());
                 } else {
                     $SELECT = "SELECT brukerEmail FROM brukeretabell WHERE brukerEmail = ? LIMIT 1";
-                    $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, salt, brukerEmail, brukerEmailHash, saltEmail, brukerStudie, brukerAar, brukerType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
+                    $INSERT = "INSERT INTO brukeretabell (brukerNavn, brukerPassord, salt, brukerEmail, brukerEmailHash, saltEmail, brukerStudie, brukerAar, brukerType, passordSistOppdatert) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?)";
 
                     $stmt = $conn->prepare($SELECT);
                     $stmt->bind_param("s", $userEmail);
@@ -62,18 +62,21 @@
                                 $saltEmail .= $numbers[$tilfeldigBokstav];
                             }
                         }
+
+                        $datoenIdag = date("Y-m-d");
                         $stmt->close();
                         $stmt = $conn->prepare($INSERT);
                         $emailHash = md5($userEmail);
-                        $stmt->bind_param("sssssssi", $userName, $userPassword, $salt, $userEmail, $emailHash, $saltEmail, $userStudie, $userYear);
+                        echo $datoenIdag;
+                        $stmt->bind_param("sssssssis", $userName, $userPassword, $salt, $userEmail, $emailHash, $saltEmail, $userStudie, $userYear, $datoenIdag);
                         $stmt->execute();
                         echo "Bruker lagt til";
 
                         // Logger at en bruker ble opprettet
-                        $Log->info('En bruker ble laget.', ['Navn:' => $userName]);
+                        //$Log->info('En bruker ble laget.', ['Navn:' => $userName]);
                     } else {
                         // Logger at en bruker allerede finnes
-                        $Log->info('Noen prøvde å lage en bruker som finnes, idiot :)');
+                        //$Log->info('Noen prøvde å lage en bruker som finnes, idiot :)');
 
                         echo "Bruker allerede registrert";
                     }
@@ -82,7 +85,7 @@
                 }
             } else {
                 // Logger at alle felter ikke ble fylt ut
-                $Log->info('Bruker ble ikke laget pga alle felter ikke var fylt ut');
+                //$Log->info('Bruker ble ikke laget pga alle felter ikke var fylt ut');
 
                 echo "Du må fylle ut alle feltene";
                 die();

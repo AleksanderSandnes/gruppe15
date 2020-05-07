@@ -4,9 +4,9 @@
 
     sleep($timeLoginDelay);
     // Composer autoloader
-    require __DIR__ . '/../vendor/autoload.php';
+    //require __DIR__ . '/../vendor/autoload.php';
 
-    include("logger.php");
+    //include("logger.php");
     include("config.php");
     include("db.php");
     include('inputValidation.php');
@@ -29,7 +29,7 @@
                     die('Connect Error(' . mysqli_connect_errno() . ')' . mysqli_connect_error());
                 } else {
                     $SELECT = "SELECT brukerEmail FROM foreleser WHERE brukerEmail = ? LIMIT 1";
-                    $INSERT = "INSERT INTO foreleser(brukerNavn, brukerEmail, brukerEmailHash, brukerPassord, salt, saltEmail, brukerURL, brukerType, godkjentAvAdmin) VALUES (?, ?, ?, ?, ?, ?, ?, 2,0)";
+                    $INSERT = "INSERT INTO foreleser(brukerNavn, brukerEmail, brukerEmailHash, brukerPassord, salt, saltEmail, brukerURL, brukerType, godkjentAvAdmin, passordSistOppdatert) VALUES (?, ?, ?, ?, ?, ?, ?, 2,0, ?)";
 
                     $stmt = $conn->prepare($SELECT);
                     $stmt->bind_param("s", $email);
@@ -64,10 +64,11 @@
                                 $saltEmail .= $numbers[$tilfeldigBokstav];
                             }
                         }
+                        $datoenIdag = date("Y-m-d");
                         $stmt->close();
                         $stmt = $conn->prepare($INSERT);
                         $emailHash = md5($email);
-                        $stmt->bind_param("sssssss", $navn, $email, $emailHash, $passord, $saltPass, $saltEmail, $_FILES['registerBilde']['name']);
+                        $stmt->bind_param("sssssss", $navn, $email, $emailHash, $passord, $saltPass, $saltEmail, $_FILES['registerBilde']['name'], $datoenIdag);
 
                         //bilde
                         if (($_FILES['registerBilde']['name'] != "")) {
@@ -86,7 +87,7 @@
                                 // Check if file already exists
                                 if (file_exists($path_filename_ext)) {
                                     // Sender en log om at noen prøvde å legge til en fil som allerede finnes
-                                    $Log->info("En bruker prøvde å laste opp et bilde som allerede finnes");
+                                    //$Log->info("En bruker prøvde å laste opp et bilde som allerede finnes");
 
                                     echo "Sorry, file already exists.<br>";
                                 } else {
@@ -95,7 +96,7 @@
                                     echo "Bruker lagt til";
 
                                     // Sender en log om at bruker ble opprettet.
-                                    $Log->info("En bruker ble opprettet.", ['brukernavn' => $navn]);
+                                    //$Log->info("En bruker ble opprettet.", ['brukernavn' => $navn]);
 
                                     $stmt->execute();
                                 }
@@ -105,21 +106,21 @@
                                 echo "<br>*Psst* Brukeren ble ikke lagt til";
 
                                 // Sender inn en log
-                                $Log->info('Noen prøvde å opprette en bruker men klarte det ikke');
+                                //$Log->info('Noen prøvde å opprette en bruker men klarte det ikke');
                             }
                         } else {
                             echo "Bruker allerede registrert";
                         }
                     } else {
                         // Logger feilet forsøk
-                        $Log->info('Noen prøvde å opprette en bruker som allerede finnes');
+                        //$Log->info('Noen prøvde å opprette en bruker som allerede finnes');
 
                         echo "Bruker allerede registrert";
                     }
                 }
             } else {
                 // Logger at noen ikke fyllte ut alle feltene
-                $Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
+                //$Log->info('Noen prøvde å lage bruker uten å fylle inn alle feltene');
                 echo "Du må fylle ut alle feltene";
                 die();
             }

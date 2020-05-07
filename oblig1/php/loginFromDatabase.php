@@ -4,7 +4,7 @@
 
     sleep($timeLoginDelay);
 
-   include('logger.php');
+   //include('logger.php');
    include("cookiemonster.php");
    include("db.php");
    include('inputValidation.php');
@@ -58,7 +58,7 @@
            $_SESSION['login_user'] = $myusername;
            $_SESSION['login_type'] = $typeBruker;
            // Logger riktig innlogging
-           $Log->info('Bruker logget inn', ['brukernavn'=>$myusername]);
+           // $Log->info('Bruker logget inn', ['brukernavn'=>$myusername]);
 
            setCookies("emailCookie", md5($myusername) . $saltetEmail);
            setCookies("passwordCookie", $mypassword . $saltet);
@@ -70,14 +70,14 @@
            }
            else
                header("location: welcome$typeBruker.php");
+       } else {
+           echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
+
+           //$_SESSION["login_attempts"] += 1;
+
+           // Logger feil innlogging creds
+           // $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
        }
-   } else {
-       echo "<h1>Feil passord eller email</h1><img src='../images/sadLinux.jpg' style>";
-
-       $_SESSION["login_attempts"] += 1;
-
-       // Logger feil innlogging creds
-       $Log->notice('Noen prøvde å logge inn med feil brukernavn eller passord');
    }
 ?><html">
 <h2><a href = "logout.php" target="_top">Gå tilbake til login</a></h2>

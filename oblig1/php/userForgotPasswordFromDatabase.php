@@ -1,7 +1,7 @@
 <?php
    include('inputValidation.php');
    include("db.php");
-   include('logger.php');
+   //include('logger.php');
 
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       $conn = new mysqli($host, $dbUsername, $dbPassword, $dbname);
@@ -48,7 +48,7 @@
               $stmtsql->execute();
 
               // Logger at en bruker har fått nytt passord
-              $Log->info('En bruker har fått nytt passord.', ['BrukerEmail' => $myEmail]);
+              //$Log->info('En bruker har fått nytt passord.', ['BrukerEmail' => $myEmail]);
           } else {
               echo "  Brukeren ble ikke lagt til.
                 <br><strong>Grunn:</strong>
